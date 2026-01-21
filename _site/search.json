@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "students.html",
+    "href": "students.html",
+    "title": "Students",
+    "section": "",
+    "text": "Last updated: 2026-01-21 11:44 SAST\n\nCurrent studentsPast studentsAll students"
+  },
+  {
+    "objectID": "team.html",
+    "href": "team.html",
+    "title": "Team",
+    "section": "",
+    "text": "Last updated: 2026-01-21 11:44 SAST"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "Last updated: r format(updated, “%Y-%m-%d %H:%M %Z”)\nThis site presents the SEEC 2025 Annual Report as a live, web-based document.\nAll tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt."
+  }
+]

@@ -1,0 +1,76 @@
+---
+title: "Students"
+---
+
+```{r}
+library(lubridate)
+library(DT)
+library(dplyr)
+
+source("R/data.R")
+d <- seec_read_data()
+
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
+all_students <- bind_rows(
+  d$current_students %>% mutate(Record = "Current"),
+  d$past_students %>% mutate(Record = "Past")
+)
+```
+
+**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
+
+::: {.panel-tabset}
+
+## Current students
+
+```{r}
+DT::datatable(
+  d$current_students,
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons",
+  options = list(
+    dom = "Bfrtip",
+    buttons = c("copy", "csv", "excel"),
+    pageLength = 25,
+    scrollX = TRUE
+  )
+)
+```
+
+## Past students
+
+```{r}
+DT::datatable(
+  d$past_students,
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons",
+  options = list(
+    dom = "Bfrtip",
+    buttons = c("copy", "csv", "excel"),
+    pageLength = 25,
+    scrollX = TRUE
+  )
+)
+```
+
+## All students
+
+```{r}
+DT::datatable(
+  all_students,
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons",
+  options = list(
+    dom = "Bfrtip",
+    buttons = c("copy", "csv", "excel"),
+    pageLength = 25,
+    scrollX = TRUE
+  )
+)
+```
+
+:::

@@ -1,0 +1,31 @@
+---
+title: "Team"
+---
+
+```{r}
+library(lubridate)
+library(DT)
+library(dplyr)
+
+source("R/data.R")
+d <- seec_read_data()
+
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+```
+
+**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
+
+```{r}
+DT::datatable(
+  d$coreteam,
+  rownames = FALSE,
+  filter = "top",
+  extensions = "Buttons",
+  options = list(
+    dom = "Bfrtip",
+    buttons = c("copy", "csv", "excel"),
+    pageLength = 25,
+    scrollX = TRUE
+  )
+)
+```
