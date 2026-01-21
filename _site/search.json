@@ -4,14 +4,14 @@
     "href": "students.html",
     "title": "Students",
     "section": "",
-    "text": "Last updated: 2026-01-21 11:44 SAST\n\nCurrent studentsPast studentsAll students"
+    "text": "Last updated: 2026-01-21 12:44 SAST"
   },
   {
     "objectID": "team.html",
     "href": "team.html",
     "title": "Team",
     "section": "",
-    "text": "Last updated: 2026-01-21 11:44 SAST"
+    "text": "The SEEC leadership team decided to present our members in three groups: leadership team, rest of the core team and affiliates. We used the below guidelines on what is expected of the different categories of affiliation to decide who should be a core member vs affiliate. This was circulated to the all SEEC members for feedback and adjusted on the website accordingly. The curren team and affiliations can be seen in Table @tab:affaca.\nSEEC Academics and Postdoctoral Fellows (Core Team)\n\nThese are people who view the success of SEEC and their own academic success as being connected to some degree.\nThey attend the monthly SEEC staff meetings as this is where the direction of SEEC is developed.\nTake a leadership role or assist with the organising of the various facets of SEEC e.g. Stats Toolbox, research seminars.\nMake an effort to contribute to raising funds to support SEEC core activities and shared resources.\nBenefit from shared SEEC resources (admin support, computers, office space).\nContribute ideas when called upon to do so.\nAttend the annual SEEC Student symposium if at all possible.\nMake every reasonable effort to attend research meetings.\nList SEEC as an affiliation on any papers written or presentations given.\nContribute to the SEEC annual report.\nActively collaborate with other SEEC members.\nIf not based at a South African University, SEEC core members need to be Honorary Research Associates.\nAre on the seec-staff-l mailing list.\n\n\nSEEC Postgraduates\n\nThese are students whose research project and interests fall within the parameters of Statistics in Ecology, Environment and Conservation and whose supervisor is supportive of the connection to the group. They have a (co)supervisor who is part of the core group or an Affiliated Academic.\nPresent at least two talks each year. One will be at the annual SEEC symposium and the other will be at the research meetings held at three-weekly intervals.\nAttend the annual SEEC Student symposium.\nAttend all research meetings (arrangements can be made for SEEC students who are not based in Cape Town).\nList SEEC as an affiliation on any papers written or presentations given.\nAre on the seec-all-l mailing list.\n\nSEEC Affiliated Academic\n\nThese academics are SEEC members but not willing or able to contribute to the same degree as a core team member, either because of commitments with other research groups or because their area of interest only overlaps partly with SEEC’s vision.\nAdd their SEEC affiliation to their publications where appropriate.\nWilling to work with the group, contribute to meetings and joint projects, bring opportunities to the attention of the group and promote the group in conversations if the opportunity arises.\nCan benefit from shared SEEC resources if they contribute funding.\nPostgraduate students of affiliated academics can be SEEC postgraduate students.\nCan be SEEC Honorary Research Associates if not based at a South African university.\nAttend the SEEC student symposium and research meetings if possible.\nAre on the seec-staff-l mailing list.\n\nSEEC Undergraduates\n\nUndergraduate students who are interested in the work we do at SEEC.\nThey can be involved in research projects.\nThey are encouraged to participate in the Research Meetings and to attend the student symposium.\nThey can be mentored by SEEC Postgraduates or academics.\nAre on the seec-all-l mailing list.\n\nSEEC Advisory Board\n\nAttend and give inputs at board meetings.\nGive inputs and advice when called upon.\nAre being updated about SEEC activities through the annual report and at meetings.\n\nSEEC Partners\n\nAcademics or scientists working at a university or research organisation who collaborate with the SEEC core team, be it as co-supervisors, or collaborators on projects and funding applications.\nThese academics are not formally part of the SEEC team and are not expected to list SEEC as an affiliation on papers and presentations.\nCan be consulted for inputs on SEEC strategy or projects.\nCan be on the the seec-friends-l mailing list.\n\nSEEC Friends\n\nAnyone who is interested in what we do and would like to be informed of seminars (Stats Toolbox) and courses.\nThere is no obligation or commitment either on part of SEEC or the Friends.\nAre on the seec-friends-l mailing list or keep themselves in the loop through the SEEC facebook page, twitter or web site.\n\nLast updated: 2026-01-21 12:03 SAST"
   },
   {
     "objectID": "index.html",
@@ -19,5 +19,75 @@
     "title": "Home",
     "section": "",
     "text": "Last updated: r format(updated, “%Y-%m-%d %H:%M %Z”)\nThis site presents the SEEC 2025 Annual Report as a live, web-based document.\nAll tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt."
+  },
+  {
+    "objectID": "team.html#team",
+    "href": "team.html#team",
+    "title": "Team",
+    "section": "",
+    "text": "The SEEC leadership team decided to present our members in three groups: leadership team, rest of the core team and affiliates. We used the below guidelines on what is expected of the different categories of affiliation to decide who should be a core member vs affiliate. This was circulated to the all SEEC members for feedback and adjusted on the website accordingly. The curren team and affiliations can be seen in Table @tab:affaca.\nSEEC Academics and Postdoctoral Fellows (Core Team)\n\nThese are people who view the success of SEEC and their own academic success as being connected to some degree.\nThey attend the monthly SEEC staff meetings as this is where the direction of SEEC is developed.\nTake a leadership role or assist with the organising of the various facets of SEEC e.g. Stats Toolbox, research seminars.\nMake an effort to contribute to raising funds to support SEEC core activities and shared resources.\nBenefit from shared SEEC resources (admin support, computers, office space).\nContribute ideas when called upon to do so.\nAttend the annual SEEC Student symposium if at all possible.\nMake every reasonable effort to attend research meetings.\nList SEEC as an affiliation on any papers written or presentations given.\nContribute to the SEEC annual report.\nActively collaborate with other SEEC members.\nIf not based at a South African University, SEEC core members need to be Honorary Research Associates.\nAre on the seec-staff-l mailing list.\n\n\nSEEC Postgraduates\n\nThese are students whose research project and interests fall within the parameters of Statistics in Ecology, Environment and Conservation and whose supervisor is supportive of the connection to the group. They have a (co)supervisor who is part of the core group or an Affiliated Academic.\nPresent at least two talks each year. One will be at the annual SEEC symposium and the other will be at the research meetings held at three-weekly intervals.\nAttend the annual SEEC Student symposium.\nAttend all research meetings (arrangements can be made for SEEC students who are not based in Cape Town).\nList SEEC as an affiliation on any papers written or presentations given.\nAre on the seec-all-l mailing list.\n\nSEEC Affiliated Academic\n\nThese academics are SEEC members but not willing or able to contribute to the same degree as a core team member, either because of commitments with other research groups or because their area of interest only overlaps partly with SEEC’s vision.\nAdd their SEEC affiliation to their publications where appropriate.\nWilling to work with the group, contribute to meetings and joint projects, bring opportunities to the attention of the group and promote the group in conversations if the opportunity arises.\nCan benefit from shared SEEC resources if they contribute funding.\nPostgraduate students of affiliated academics can be SEEC postgraduate students.\nCan be SEEC Honorary Research Associates if not based at a South African university.\nAttend the SEEC student symposium and research meetings if possible.\nAre on the seec-staff-l mailing list.\n\nSEEC Undergraduates\n\nUndergraduate students who are interested in the work we do at SEEC.\nThey can be involved in research projects.\nThey are encouraged to participate in the Research Meetings and to attend the student symposium.\nThey can be mentored by SEEC Postgraduates or academics.\nAre on the seec-all-l mailing list.\n\nSEEC Advisory Board\n\nAttend and give inputs at board meetings.\nGive inputs and advice when called upon.\nAre being updated about SEEC activities through the annual report and at meetings.\n\nSEEC Partners\n\nAcademics or scientists working at a university or research organisation who collaborate with the SEEC core team, be it as co-supervisors, or collaborators on projects and funding applications.\nThese academics are not formally part of the SEEC team and are not expected to list SEEC as an affiliation on papers and presentations.\nCan be consulted for inputs on SEEC strategy or projects.\nCan be on the the seec-friends-l mailing list.\n\nSEEC Friends\n\nAnyone who is interested in what we do and would like to be informed of seminars (Stats Toolbox) and courses.\nThere is no obligation or commitment either on part of SEEC or the Friends.\nAre on the seec-friends-l mailing list or keep themselves in the loop through the SEEC facebook page, twitter or web site.\n\nLast updated: 2026-01-21 12:02 SAST"
+  },
+  {
+    "objectID": "students.html#summary-current-students",
+    "href": "students.html#summary-current-students",
+    "title": "Students",
+    "section": "Summary (current students)",
+    "text": "Summary (current students)"
+  },
+  {
+    "objectID": "students.html#detailed-table-of-students",
+    "href": "students.html#detailed-table-of-students",
+    "title": "Students",
+    "section": "Detailed table of students",
+    "text": "Detailed table of students\n\nCurrent studentsPast students"
+  },
+  {
+    "objectID": "students.html#summary",
+    "href": "students.html#summary",
+    "title": "Students",
+    "section": "Summary",
+    "text": "Summary"
+  },
+  {
+    "objectID": "students.html#summary-table-of-registered-students",
+    "href": "students.html#summary-table-of-registered-students",
+    "title": "Students",
+    "section": "Summary table of registered students",
+    "text": "Summary table of registered students\nThis table summarises the number of currently registered SEEC postgraduate students, broken down by first year of registration and degree type. It provides an overview of cohort sizes over time and highlights the current balance between PhD and Masters students."
+  },
+  {
+    "objectID": "students.html#summary-table-of-graduated-students",
+    "href": "students.html#summary-table-of-graduated-students",
+    "title": "Students",
+    "section": "Summary table of graduated students",
+    "text": "Summary table of graduated students\nThis table summarises SEEC postgraduate students who have graduated, grouped by graduation year and degree type. It provides an overview of student throughput and completion patterns over recent years."
+  },
+  {
+    "objectID": "students.html#summary-table-of-postdoc-students",
+    "href": "students.html#summary-table-of-postdoc-students",
+    "title": "Students",
+    "section": "Summary table of postdoc students",
+    "text": "Summary table of postdoc students\nThis table summarises SEEC postdoctoral researchers, grouped by year and host department. It provides an overview of postdoctoral involvement across departments and time."
+  },
+  {
+    "objectID": "students.html#registered-students",
+    "href": "students.html#registered-students",
+    "title": "Students",
+    "section": "Registered students",
+    "text": "Registered students\nThis table summarises the number of currently registered SEEC postgraduate students, broken down by first year of registration and degree type. It provides an overview of cohort sizes over time and highlights the current balance between PhD and Masters students."
+  },
+  {
+    "objectID": "students.html#graduated-students",
+    "href": "students.html#graduated-students",
+    "title": "Students",
+    "section": "Graduated students",
+    "text": "Graduated students\nThis table summarises SEEC postgraduate students who have graduated, grouped by graduation year and degree type. It provides an overview of student throughput and completion patterns over recent years."
+  },
+  {
+    "objectID": "students.html#postdoc-students",
+    "href": "students.html#postdoc-students",
+    "title": "Students",
+    "section": "Postdoc students",
+    "text": "Postdoc students\nThis table summarises SEEC postdoctoral researchers, grouped by year and host department. It provides an overview of postdoctoral involvement across departments and time."
   }
 ]

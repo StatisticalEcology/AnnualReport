@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "SEEC 2025 Annual Report"
+  title: "SEEC Annual Report 2025"
   navbar:
     left:
       - href: index.qmd
@@ -16,6 +16,7 @@ format:
   html:
     theme: cosmo
     toc: true
+    page-layout: full
 
 execute:
   echo: false

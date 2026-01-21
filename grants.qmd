@@ -1,0 +1,39 @@
+```{r}
+library(lubridate)
+library(DT)
+library(dplyr)
+
+source("R/data.R")
+d <- seec_read_data()
+
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
+year_degree_counts <- d$current_students %>%
+  count(`First registered`, Degree, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Degree,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(`First registered`))
+
+
+year_grad_counts <- d$past_students %>%
+  count(`Graduation Year`, Degree, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Degree,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(`Graduation Year`))
+
+year_postdoc_counts <- d$postdocs %>%
+  count(Year, Department, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Department,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(Year))
+
+```

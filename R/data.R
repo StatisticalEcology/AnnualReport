@@ -39,9 +39,25 @@ seec_read_data <- function() {
     ) %>%
     arrange(Name)
   
+  postdocs <- read_sheet(
+    "https://docs.google.com/spreadsheets/d/1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY/edit?usp=sharing",
+    sheet = "Current PostDocs"
+  )
+  
+  # Grants 
+  
+  grantlist <- read_sheet('https://docs.google.com/spreadsheets/d/1055yLA_Wh7KN8OJfakazZTAyBguB9i_CqSzf0hmC5Pc/edit?usp=sharing', sheet='Projects')
+  
+  # Symposia 
+  
+  symposiums <- read_sheet('https://docs.google.com/spreadsheets/d/17IYEg1OGOv4pf7Q5wLuT8VDsJTo7UU14UjDBnxXi33w/edit?usp=sharing', sheet='Symposiums')
+  
   list(
     coreteam = coreteam,
     current_students = current_students,
-    past_students = past_students
+    past_students = past_students,
+    postdocs = postdocs,
+    grantlist = grantlist,
+    symposiums = symposiums
   )
 }

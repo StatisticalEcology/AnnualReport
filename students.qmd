@@ -16,12 +16,99 @@ all_students <- bind_rows(
   d$current_students %>% mutate(Record = "Current"),
   d$past_students %>% mutate(Record = "Past")
 )
+
+
+# Summary tables (current students)
+deg_counts <- d$current_students %>%
+  count(Degree, name = "Students") %>%
+  arrange(desc(Students))
+
+year_degree_counts <- d$current_students %>%
+  count(`First registered`, Degree, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Degree,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(`First registered`))
+
+
+year_grad_counts <- d$past_students %>%
+  count(`Graduation Year`, Degree, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Degree,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(`Graduation Year`))
+
+year_postdoc_counts <- d$postdocs %>%
+  count(Year, Department, name = "Students") %>%
+  tidyr::pivot_wider(
+    names_from = Department,
+    values_from = Students,
+    values_fill = 0
+  ) %>%
+  arrange(desc(Year))
+
 ```
 
 **Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
 
-::: {.panel-tabset}
+## Registered students
 
+This table summarises the number of currently registered SEEC postgraduate students, broken down by first year of registration and degree type. It provides an overview of cohort sizes over time and highlights the current balance between PhD and Masters students.
+
+```{r}
+DT::datatable(
+year_degree_counts,
+rownames = FALSE,
+options = list(
+dom = "t",
+pageLength = nrow(year_degree_counts),
+scrollX = TRUE
+)
+)
+
+```
+
+## Graduated students
+
+This table summarises SEEC postgraduate students who have graduated, grouped by graduation year and degree type. It provides an overview of student throughput and completion patterns over recent years.
+
+```{r}
+DT::datatable(
+year_grad_counts,
+rownames = FALSE,
+options = list(
+dom = "t",
+pageLength = nrow(year_degree_counts),
+scrollX = TRUE
+)
+)
+
+```
+
+## Postdoc students
+
+This table summarises SEEC postdoctoral researchers, grouped by year and host department. It provides an overview of postdoctoral involvement across departments and time.
+
+```{r}
+DT::datatable(
+year_postdoc_counts,
+rownames = FALSE,
+options = list(
+dom = "t",
+pageLength = nrow(year_postdoc_counts),
+scrollX = TRUE
+)
+)
+
+```
+
+## Detailed table of students
+
+::: panel-tabset
 ## Current students
 
 ```{r}
@@ -55,22 +142,4 @@ DT::datatable(
   )
 )
 ```
-
-## All students
-
-```{r}
-DT::datatable(
-  all_students,
-  rownames = FALSE,
-  filter = "top",
-  extensions = "Buttons",
-  options = list(
-    dom = "Bfrtip",
-    buttons = c("copy", "csv", "excel"),
-    pageLength = 25,
-    scrollX = TRUE
-  )
-)
-```
-
 :::
