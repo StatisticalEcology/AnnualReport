@@ -13,10 +13,10 @@ website:
         text: Students
       - href: grants.qmd
         text: Grants
-      - href: events.qmd
-        text: SEEC Year in Review
       - href: publications.qmd
         text: Publications
+      - href: events.qmd
+        text: SEEC Year in Review
 
 format:
   html:

@@ -52,6 +52,30 @@ grantlist_mod_with_totals <- bind_rows(grantlist_mod, totals)
 grantlist_display <- grantlist_mod_with_totals %>%
   mutate(across(all_of(year_cols), ~ ifelse(is.na(.x), "", format(.x, big.mark = ",", scientific = FALSE))))
 
+# Use the numeric version BEFORE you add the totals row
+grants_yearly <- grantlist_mod %>%
+  select(all_of(year_cols)) %>%
+  pivot_longer(cols = everything(), names_to = "year", values_to = "amount") %>%
+  mutate(year = as.integer(year)) %>%
+  group_by(year) %>%
+  summarise(total = sum(amount, na.rm = TRUE), .groups = "drop") %>%
+  arrange(year)
+
+```
+
+```{r}
+library(ggplot2)
+library(scales)
+
+ggplot(grants_yearly, aes(x = year, y = total)) +
+    geom_col() +
+    scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
+    labs(title = "Total grant funding per year", x = NULL, y = "Total funding")
+
+```
+
+
+```{r}
 DT::datatable(
   grantlist_display,
   rownames = FALSE,

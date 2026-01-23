@@ -105,6 +105,7 @@ The SEEC leadership team decided to present our members in three groups: leaders
 library(lubridate)
 library(DT)
 library(dplyr)
+library(googlesheets4)
 
 source("R/data.R")
 d <- seec_read_data()

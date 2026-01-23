@@ -38,7 +38,6 @@ pubs_yearly <- pubs %>%
     publications   = n(),
     total_citations = sum(cites, na.rm = TRUE),
     mean_citations  = round(mean(cites, na.rm = TRUE), 1),
-    median_citations = median(cites, na.rm = TRUE),
     journals        = n_distinct(journal),
     highly_cited_100 = sum(cites >= 100, na.rm = TRUE),
     .groups = "drop"
@@ -52,7 +51,6 @@ kable(
     "Publications",
     "Total citations",
     "Mean citations",
-    "Median citations",
     "Distinct journals",
     "Highly cited (≥100)"
   ),

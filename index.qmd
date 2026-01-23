@@ -4,11 +4,12 @@ title: "Home"
 
 ```{r}
 library(lubridate)
+library(googlesheets4)
 updated <- with_tz(Sys.time(), "Africa/Johannesburg")
 ```
 
 **Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
 
-This site presents the SEEC 2025 Annual Report as a live, web-based document.
+This site presents annual statistics and summaries as a live, web-based document.
 
-All tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt. 
+All tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt - still working on this. 
