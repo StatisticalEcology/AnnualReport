@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "SEEC Annual Report 2025"
+  title: "SEEC Annual Statistics and Report"
   navbar:
     left:
       - href: index.qmd
@@ -11,6 +11,12 @@ website:
         text: Team
       - href: students.qmd
         text: Students
+      - href: grants.qmd
+        text: Grants
+      - href: events.qmd
+        text: SEEC Year in Review
+      - href: publications.qmd
+        text: Publications
 
 format:
   html:

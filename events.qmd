@@ -1,0 +1,106 @@
+---
+title: "SEEC Year in Review"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+<details open>
+<summary><strong>2025</strong></summary>
+
+## Executive summary
+
+In 2025, SEEC delivered a full programme of training and community activities (symposium, short course, ecological forecasting course, research seminars, writing retreat), while also strengthening organisational foundations through re-accreditation, improved administration capacity, clearer postgraduate support structures, improved financial governance, and more formalised communications and reporting workflows.
+
+## Key events and activities
+
+### SEEC Symposium / Conference (expanded)
+
+-   **27–28 May 2025**
+    -   SEEC hosted an expanded two-day Symposium on Statistical Ecology & Quantitative Biology at UCT.\
+    -   Approximately 25 abstracts were received, enabling a full two-day programme.
+    -   The symposium included postgraduate student and postdoctoral presentations, with participation from external research groups.
+    -   CoE-MASS funding support enabled the expanded format.
+
+### Ecological Forecasting Course
+
+-   **21–25 July 2025**
+    -   SEEC hosted a five-day course at UCT.\
+    -   Led by Mike Dietze, with contributions from SEEC staff and collaborators.
+    -   Teaching resources were made available online after the course for broader access.
+    -   Post-course follow-up included reporting to external platforms (e.g. SAEON eNews) and exploration of future Africa-focused forecasting outputs.
+
+### SEEC Statistics Short Course
+
+-   **27–31 October 2025**
+    -   SEEC delivered the annual Statistics Short Course (online format).\
+    -   The course proceeded successfully despite lower-than-usual paid uptake.
+    -   Participant feedback was strongly positive (reported as \~90% rating ≥4/5).
+    -   Course naming was refined to “Statistics (with R)” to clarify that R supports the course rather than being the primary objective.
+    -   Migration of course material from Vula to Amathuba was initiated following Vula’s discontinuation, with initial conversion completed in 2025.
+
+### Research support and writing
+
+-   **8–11 December 2025**
+    -   SEEC held a Writing Retreat (3 nights).\
+    -   Approximately 10 participants, prioritising staff and postgraduate students with active manuscripts or thesis chapters.
+    -   Participation criteria were formalised at leadership level to prioritise students nearing completion.
+    -   Supported through CoE-MASS funding and aligned with SEEC’s focus on outputs and completion.
+
+### Community-building
+
+-   **11 October 2025**
+    -   SEEC Pizza Party (informal community event for staff, students, and visitors).
+
+## Organisational progress in 2025
+
+### Governance and accreditation
+
+-   SEEC progressed through a formal review process during 2025 and was re-accredited for a further five years (until end of 2030).
+-   SEEC retained a co-director leadership structure, supporting cross-departmental anchoring.
+-   Leadership engagement with Faculty highlighted challenges in review processes, administration, and cross-departmental positioning.
+
+### Administration and operations
+
+-   Nomfundo Hlongwa joined as a shared administrator (SEEC allocation: 20%) from May 2025.
+-   Work continued to clarify core vs affiliated membership expectations and participation norms.
+-   Development of departmental MoUs progressed (starting with Statistical Sciences) to improve continuity and stability across departments.
+-   Leadership discussions explicitly addressed financial sustainability and cost recovery, including engagement at Faculty level on cost-recovery models.
+
+### Postgraduate coordination and support
+
+-   Bi-weekly SEEC research meetings continued through 2025, with renewed emphasis on:
+    -   ensuring every student presents at least once annually,
+    -   creating more structured scheduling and tracking (e.g. shared schedule/spreadsheet identifying students who have and have not presented),
+    -   strengthening proposal presentation expectations for new MSc/PhD students.
+-   Leadership discussed the introduction of PhD advisory committees (beyond supervisors) to support steady progress and accountability.
+-   A consolidated postgraduate starter pack was initiated, collating guidance on:
+    -   admin pathways,
+    -   literature searching and reading,
+    -   writing support,
+    -   responsible AI use,
+    -   GitHub/version control,
+    -   high-performance computing access.
+
+### Funding pipeline and partnerships
+
+-   CoE-MASS funding supported SEEC’s major activities (symposium expansion and writing retreat).
+-   SEEC secured a Carnegie DEAL postdoctoral fellowship for 2026, with the award decision confirmed in 2025.
+    -   Leadership agreed on flexible allocation depending on outcomes of parallel funding applications.
+-   Funding pipeline development progressed, including:
+    -   exploration of major calls (e.g. NRF thematic funding, AI–climate-aligned opportunities, IKI Large Grants),
+    -   continued development of applied-partnership funding conversations (e.g. BIRDIE-related discussions),
+    -   engagement with UCT’s Development and Alumni Department (DAD) around structured fundraising and research-chair-scale proposals.
+-   Development of a SEEC business plan, aligned with MARIS-style planning, was initiated to support MoUs, major funding applications, and long-term sustainability.
+
+### Communications, reporting, and visibility
+
+-   Website and communications responsibilities transitioned during 2025, with stronger emphasis on:
+    -   keeping student and staff pages current,
+    -   ensuring the publication list is up to date,
+    -   improving reporting inputs (spreadsheets) to support semi-automated reporting.
+-   Social media focus increasingly shifted toward LinkedIn and Bluesky, supported by reusable templates for publications, achievements, and announcements.
+-   Better tracking of conference attendance, achievements/prizes, and outputs was introduced to support annual reporting.
+-   Michelle resigned as SEEC communications lead in December 2025 and was replaced by postdoctoral fellow Stephanie, who completed Drupal training and assumed responsibility for website updates and outreach.
+</details>

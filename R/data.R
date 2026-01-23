@@ -52,12 +52,17 @@ seec_read_data <- function() {
   
   symposiums <- read_sheet('https://docs.google.com/spreadsheets/d/17IYEg1OGOv4pf7Q5wLuT8VDsJTo7UU14UjDBnxXi33w/edit?usp=sharing', sheet='Symposiums')
   
+  # Publications
+  
+  pubs <- read_sheet('https://docs.google.com/spreadsheets/d/1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY/edit?usp=sharing', sheet='Google scholar pubs_2000-2024')
+  
   list(
     coreteam = coreteam,
     current_students = current_students,
     past_students = past_students,
     postdocs = postdocs,
     grantlist = grantlist,
-    symposiums = symposiums
+    symposiums = symposiums,
+    pubs = pubs
   )
 }

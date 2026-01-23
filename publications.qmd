@@ -1,0 +1,107 @@
+---
+title: "SEEC Publications"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(ggplot2)
+library(DT)
+
+# Option A: If you already have a dataframe named `pubs` in the environment,
+# comment out the CSV section below.
+
+# Option B: Read from a CSV (recommended)
+source("R/data.R")
+d <- seec_read_data()
+
+# Basic cleaning / type safety
+pubs <- d$pubs %>%
+  mutate(
+    year  = suppressWarnings(as.integer(year)),
+    cites = suppressWarnings(as.numeric(cites))
+  )
+```
+
+## Yearly summary table 
+
+```{r}
+pubs_yearly <- pubs %>%
+  filter(!is.na(year)) %>%
+  group_by(year) %>%
+  summarise(
+    publications   = n(),
+    total_citations = sum(cites, na.rm = TRUE),
+    mean_citations  = round(mean(cites, na.rm = TRUE), 1),
+    median_citations = median(cites, na.rm = TRUE),
+    journals        = n_distinct(journal),
+    highly_cited_100 = sum(cites >= 100, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(year))
+
+kable(
+  pubs_yearly,
+  col.names = c(
+    "Year",
+    "Publications",
+    "Total citations",
+    "Mean citations",
+    "Median citations",
+    "Distinct journals",
+    "Highly cited (≥100)"
+  ),
+  caption = "Summary of SEEC-affiliated publications by year"
+)
+```
+
+## Publications per year
+
+```{r}
+ggplot(pubs_yearly, aes(x = year, y = publications)) +
+  geom_col() +
+  labs(
+    x = "Year",
+    y = "Number of publications",
+    title = "SEEC-affiliated publications per year"
+  ) +
+  theme_minimal()
+```
+
+## Yearly highlights (top 3 most cited per year)
+
+```{r}
+top_by_year <- pubs %>%
+  filter(!is.na(year)) %>%
+  arrange(year, desc(cites)) %>%
+  group_by(year) %>%
+  slice_head(n = 3) %>%
+  ungroup() %>%
+  select(year, title, journal, cites) %>%
+  arrange(desc(year), desc(cites))
+
+kable(
+  top_by_year,
+  col.names = c("Year", "Title", "Journal", "Citations"),
+  caption = "Top 3 most cited publications per year"
+)
+```
+
+---
+
+## Full publications table 
+
+```{r}
+DT::datatable(
+  pubs %>% arrange(desc(year), desc(cites)),
+  options = list(pageLength = 25, scrollX = TRUE),
+  rownames = FALSE
+)
+```
+
+
