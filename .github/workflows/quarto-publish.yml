@@ -22,7 +22,17 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("googlesheets4","dplyr","DT","lubridate"), repos="https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c(
+            "googlesheets4",
+            "dplyr",
+            "DT",
+            "lubridate",
+            "tidyr",
+            "readr",
+            "ggplot2",
+            "scales",
+            "knitr"
+          ), repos="https://cloud.r-project.org")'
 
       - name: Render site
         run: quarto render
