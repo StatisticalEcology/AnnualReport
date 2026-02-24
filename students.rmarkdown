@@ -54,11 +54,17 @@ year_postdoc_counts <- d$postdocs %>%
 
 ```
 
+
+
+
 **Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
 
 ## Registered students
 
 This table summarises the number of currently registered SEEC postgraduate students, broken down by first year of registration and degree type. It provides an overview of cohort sizes over time and highlights the current balance between PhD and Masters students.
+
+
+
 
 ```{r}
 DT::datatable(
@@ -73,9 +79,15 @@ scrollX = TRUE
 
 ```
 
+
+
+
 ## Graduated students
 
 This table summarises SEEC postgraduate students who have graduated, grouped by graduation year and degree type. It provides an overview of student throughput and completion patterns over recent years.
+
+
+
 
 ```{r}
 DT::datatable(
@@ -90,9 +102,15 @@ scrollX = TRUE
 
 ```
 
+
+
+
 ## Postdoc students
 
 This table summarises SEEC postdoctoral researchers, grouped by year and host department. It provides an overview of postdoctoral involvement across departments and time.
+
+
+
 
 ```{r}
 DT::datatable(
@@ -107,10 +125,16 @@ scrollX = TRUE
 
 ```
 
+
+
+
 ## Detailed table of students
 
 ::: panel-tabset
 ## Current students
+
+
+
 
 ```{r}
 DT::datatable(
@@ -127,7 +151,13 @@ DT::datatable(
 )
 ```
 
+
+
+
 ## Past students
+
+
+
 
 ```{r}
 DT::datatable(
@@ -143,4 +173,8 @@ DT::datatable(
   )
 )
 ```
+
+
+
 :::
+
