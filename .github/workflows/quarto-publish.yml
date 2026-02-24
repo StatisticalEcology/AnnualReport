@@ -18,9 +18,11 @@ jobs:
 
       - name: Compute Google Sheets fingerprint
         id: sheets_hash
+        continue-on-error: true
         run: |
           python3 - <<'PY'
           import hashlib
+          import time
           import urllib.parse
           import urllib.request
 
@@ -35,11 +37,25 @@ jobs:
           ]
 
           digest = hashlib.sha256()
+          headers = {"User-Agent": "github-actions-sheet-fingerprint/1.0"}
           for spreadsheet_id, sheet_name in sheets:
               params = urllib.parse.urlencode({"tqx": "out:csv", "sheet": sheet_name})
               url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/gviz/tq?{params}"
-              with urllib.request.urlopen(url, timeout=60) as resp:
-                  digest.update(resp.read())
+              last_error = None
+              for attempt in range(3):
+                  try:
+                      req = urllib.request.Request(url, headers=headers)
+                      with urllib.request.urlopen(req, timeout=90) as resp:
+                          digest.update(resp.read())
+                      break
+                  except Exception as err:
+                      last_error = err
+                      if attempt < 2:
+                          time.sleep(3)
+                  else:
+                      pass
+              else:
+                  raise RuntimeError(f"Failed to fetch sheet '{sheet_name}' from {spreadsheet_id}: {last_error}")
               digest.update(b"\n--sheet-boundary--\n")
 
           with open("/tmp/sheets_hash.txt", "w", encoding="utf-8") as f:
@@ -63,7 +79,10 @@ jobs:
           should_build=true
           reason="Push/manual run or Google Sheets data changed"
 
-          if [ "${{ github.event_name }}" = "schedule" ] && \
+          if [ "${{ steps.sheets_hash.outcome }}" != "success" ]; then
+            should_build=true
+            reason="Fingerprint step failed; running full build as fallback"
+          elif [ "${{ github.event_name }}" = "schedule" ] && \
              [ -n "${{ steps.previous_hash.outputs.value }}" ] && \
              [ "${{ steps.previous_hash.outputs.value }}" = "${{ steps.sheets_hash.outputs.value }}" ]; then
             should_build=false
@@ -110,7 +129,7 @@ jobs:
         run: quarto render
 
       - name: Persist fingerprint for future scheduled runs
-        if: steps.build_gate.outputs.should_build == 'true'
+        if: steps.build_gate.outputs.should_build == 'true' && steps.sheets_hash.outcome == 'success'
         run: |
           printf '%s\n' "${{ steps.sheets_hash.outputs.value }}" > _site/.sheet-data-hash
 
