@@ -16,16 +16,82 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Compute Google Sheets fingerprint
+        id: sheets_hash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import urllib.parse
+          import urllib.request
+
+          sheets = [
+              ("1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY", "Current core / affiliate team"),
+              ("1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY", "Current students"),
+              ("1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY", "Past students"),
+              ("1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY", "Current PostDocs"),
+              ("1055yLA_Wh7KN8OJfakazZTAyBguB9i_CqSzf0hmC5Pc", "Projects"),
+              ("17IYEg1OGOv4pf7Q5wLuT8VDsJTo7UU14UjDBnxXi33w", "Symposiums"),
+              ("1CAFM0UHwShVwRUHQzJGa-gluk6qjIW4cP4Lo7q--TrY", "Google scholar pubs_2000-2024"),
+          ]
+
+          digest = hashlib.sha256()
+          for spreadsheet_id, sheet_name in sheets:
+              params = urllib.parse.urlencode({"tqx": "out:csv", "sheet": sheet_name})
+              url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/gviz/tq?{params}"
+              with urllib.request.urlopen(url, timeout=60) as resp:
+                  digest.update(resp.read())
+              digest.update(b"\n--sheet-boundary--\n")
+
+          with open("/tmp/sheets_hash.txt", "w", encoding="utf-8") as f:
+              f.write(digest.hexdigest())
+          PY
+          echo "value=$(cat /tmp/sheets_hash.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Read previous fingerprint from gh-pages
+        id: previous_hash
+        run: |
+          previous=""
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages:refs/remotes/origin/gh-pages
+            previous="$(git show origin/gh-pages:.sheet-data-hash 2>/dev/null || true)"
+          fi
+          echo "value=$previous" >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to build
+        id: build_gate
+        run: |
+          should_build=true
+          reason="Push/manual run or Google Sheets data changed"
+
+          if [ "${{ github.event_name }}" = "schedule" ] && \
+             [ -n "${{ steps.previous_hash.outputs.value }}" ] && \
+             [ "${{ steps.previous_hash.outputs.value }}" = "${{ steps.sheets_hash.outputs.value }}" ]; then
+            should_build=false
+            reason="Scheduled run skipped: no Google Sheets changes detected"
+          fi
+
+          echo "should_build=$should_build" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          echo "$reason"
+
+      - name: Skip render/publish
+        if: steps.build_gate.outputs.should_build != 'true'
+        run: echo "${{ steps.build_gate.outputs.reason }}"
+
       - uses: quarto-dev/quarto-actions/setup@v2
+        if: steps.build_gate.outputs.should_build == 'true'
 
       - uses: r-lib/actions/setup-r@v2
+        if: steps.build_gate.outputs.should_build == 'true'
 
       - name: Install system dependencies
+        if: steps.build_gate.outputs.should_build == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev
 
       - name: Install R packages
+        if: steps.build_gate.outputs.should_build == 'true'
         run: |
           Rscript -e 'pkgs <- c(
             "googlesheets4",
@@ -40,9 +106,16 @@ jobs:
           ); install.packages(pkgs, repos="https://cloud.r-project.org"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages after install: ", paste(missing, collapse = ", "))'
 
       - name: Render site
+        if: steps.build_gate.outputs.should_build == 'true'
         run: quarto render
 
+      - name: Persist fingerprint for future scheduled runs
+        if: steps.build_gate.outputs.should_build == 'true'
+        run: |
+          printf '%s\n' "${{ steps.sheets_hash.outputs.value }}" > _site/.sheet-data-hash
+
       - name: Publish to gh-pages
+        if: steps.build_gate.outputs.should_build == 'true'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
