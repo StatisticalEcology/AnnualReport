@@ -1,6 +1,3 @@
----
-title: "Team"
----
 
 # Leadership team 
 
@@ -84,8 +81,6 @@ The SEEC leadership team decided to present our members in three groups: leaders
 -   If not based at a South African University, SEEC core members need
     to be Honorary Research Associates.
 -   Are on the seec-staff-l mailing list.
-
-\newpage 
 
 **SEEC Postgraduates**
 
