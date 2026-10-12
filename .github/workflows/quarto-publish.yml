@@ -109,7 +109,8 @@ jobs:
         if: steps.build_gate.outputs.should_build == 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libuv1-dev
+          # libglpk40, libxml2 and BLAS/LAPACK are needed to load the igraph binary
+          sudo apt-get install -y libcurl4-openssl-dev libuv1-dev libglpk40 libxml2 libgfortran5 liblapack3 libblas3
 
       - name: Install R packages
         if: steps.build_gate.outputs.should_build == 'true'
@@ -130,7 +131,7 @@ jobs:
             "igraph",
             "jsonlite",
             "stringi"
-          ); install.packages(pkgs); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages after install: ", paste(missing, collapse = ", "))'
+          ); install.packages(pkgs); missing <- pkgs[!vapply(pkgs, function(p) tryCatch({ loadNamespace(p); TRUE }, error = function(e) { message(p, ": ", conditionMessage(e)); FALSE }), logical(1))]; if (length(missing)) stop("Packages failed to load: ", paste(missing, collapse = ", "))'
 
       - name: Render site
         if: steps.build_gate.outputs.should_build == 'true'
