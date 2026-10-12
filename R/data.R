@@ -59,6 +59,10 @@ seec_read_data <- function() {
   
   postdocs <- read_sheet(seec_sheet, sheet = "Current PostDocs") %>%
     drop_private_cols()
+
+  alumni <- read_sheet(seec_sheet, sheet = "Alumni") %>%
+    select(Name, `Former type of affiliation`, Department) %>%
+    filter(!is.na(Name))
   
   # Grants 
   
@@ -77,6 +81,7 @@ seec_read_data <- function() {
     current_students = current_students,
     past_students = past_students,
     postdocs = postdocs,
+    alumni = alumni,
     grantlist = grantlist,
     symposiums = symposiums,
     pubs = pubs

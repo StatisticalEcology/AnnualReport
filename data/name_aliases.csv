@@ -1,0 +1,18 @@
+# Name corrections for the network map.
+# alias = a spelling found in the sheets; name = the standard name to use.
+# Matching ignores capitals, accents and punctuation. Add a row to fix a wrong
+# or missed match, then re-render.
+alias,name
+Ian Durbatch,Ian Durbach
+Timm Hofmann,Timm Hoffman
+Melvin Varhugese,Melvin Varughese
+Stefan Scoombie,Stefan Schoombie
+Ony Minoarivelo,Henintsoa Onivola Minoarivelo
+Bosma Sharon,Sharon Bosma
+Suresh Babu KV,Suresh Babu
+Francisco Cervantes,Pachi Cervantes
+Francisco Cervantes Peralta,Pachi Cervantes
+Francisco Cervantes-Peralta,Pachi Cervantes
+Cervantes F,Pachi Cervantes
+Francisco 'Pachi' Cervantes,Pachi Cervantes
+Bomikazi Tshingana-Bali,Bomikazi Tshingana

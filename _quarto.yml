@@ -1,5 +1,7 @@
 project:
   type: website
+  resources:
+    - assets/
 
 website:
   title: "SEEC Annual Statistics and Report"
@@ -15,6 +17,8 @@ website:
         text: Grants
       - href: publications.qmd
         text: Publications
+      - href: network.qmd
+        text: Network
       - href: events.qmd
         text: SEEC Year in Review
 

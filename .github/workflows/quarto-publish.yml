@@ -101,15 +101,12 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
         if: steps.build_gate.outputs.should_build == 'true'
-        with:
-          # Install prebuilt Linux binaries instead of compiling from source
-          use-public-rspm: true
 
       - name: Install system dependencies
         if: steps.build_gate.outputs.should_build == 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libuv1-dev
+          sudo apt-get install -y libcurl4-openssl-dev
 
       - name: Install R packages
         if: steps.build_gate.outputs.should_build == 'true'
@@ -126,8 +123,11 @@ jobs:
             "knitr",
             "plotly",
             "reactable",
-            "htmltools"
-          ); install.packages(pkgs); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages after install: ", paste(missing, collapse = ", "))'
+            "htmltools",
+            "igraph",
+            "jsonlite",
+            "stringi"
+          ); install.packages(pkgs, repos="https://cloud.r-project.org"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages after install: ", paste(missing, collapse = ", "))'
 
       - name: Render site
         if: steps.build_gate.outputs.should_build == 'true'

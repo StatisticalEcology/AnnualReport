@@ -1,0 +1,153 @@
+---
+title: "Network"
+toc: false
+include-in-header:
+  text: |
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.9/standalone/umd/vis-network.min.js"></script>
+---
+
+```{r}
+library(lubridate)
+library(dplyr)
+library(jsonlite)
+
+source("R/data.R")
+source("R/viz.R")
+source("R/network.R")
+d <- seec_read_data()
+net <- seec_network(d)
+
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
+nodes <- net$nodes %>%
+  mutate(id = row_number() - 1L)
+id_of <- setNames(nodes$id, nodes$name)
+edges <- net$edges %>%
+  mutate(from = unname(id_of[from]), to = unname(id_of[to]))
+
+role_counts <- table(nodes$role)
+cross_dept <- net$edges %>%
+  filter(type == "Supervision") %>%
+  left_join(nodes %>% select(name, d_from = department), by = c("from" = "name")) %>%
+  group_by(to) %>%
+  summarise(both = all(c("Statistical Sciences", "Biological Sciences") %in% d_from), .groups = "drop")
+
+payload <- list(
+  nodes = nodes %>%
+    transmute(id, name, role = as.character(role), department,
+              department_raw = coalesce(department_raw, department),
+              degree_group, degrees, community, links,
+              n_students, n_papers, n_grants,
+              staff = role %in% c("Leadership team", "Core", "Affiliate", "Postdoc")),
+  edges = edges %>% select(from, to, type, weight, detail),
+  levels = list(
+    role = levels(nodes$role),
+    department = c("Statistical Sciences", "Biological Sciences", "Other", "Not recorded", "Outside SEEC"),
+    community = c(sort(setdiff(unique(nodes$community), "Smaller clusters")), "Smaller clusters"),
+    degree_group = c("Doctorate", "Masters", "Coursework Masters", "Honours", "Unknown", "Staff and collaborators")
+  )
+)
+```
+
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")`
+:::
+
+::: lead-text
+How SEEC people are connected through supervision, co-authored papers and shared grants. Click a person to see their connections, drag to rearrange, and scroll to zoom. Use **Group by** to colour people by role, department, cluster or degree.
+:::
+
+```{r}
+stat_row(
+  stat_tile("People on the map", nrow(nodes),
+            paste(sum(nodes$role != "Other collaborator"), "in SEEC records")),
+  stat_tile("Connections", nrow(edges),
+            paste(sum(edges$type == "Supervision"), "supervision ·",
+                  sum(edges$type == "Co-authorship"), "co-author ·",
+                  sum(edges$type == "Shared grant"), "grant")),
+  stat_tile("Students with supervisors in both departments",
+            paste0(round(100 * mean(cross_dept$both)), "%"),
+            paste(sum(cross_dept$both), "of", nrow(cross_dept),
+                  "students · SEEC supervisors only")),
+  stat_tile("Clusters", length(setdiff(unique(nodes$community), "Smaller clusters")),
+            "groups of people who often work together")
+)
+```
+
+```{r}
+htmltools::tags$script(
+  type = "application/json", id = "network-data",
+  htmltools::HTML(jsonlite::toJSON(payload, dataframe = "rows", na = "null", auto_unbox = TRUE))
+)
+```
+
+```{=html}
+<div class="network-controls">
+  <label class="control">
+    <span>Group by</span>
+    <select id="net-group" class="form-select form-select-sm">
+      <option value="role">Role</option>
+      <option value="department">Department</option>
+      <option value="community">Cluster</option>
+      <option value="degree_group">Degree</option>
+    </select>
+  </label>
+  <fieldset class="control">
+    <span>Connections</span>
+    <label><input type="checkbox" data-edge-type="Supervision" checked> Supervision</label>
+    <label><input type="checkbox" data-edge-type="Co-authorship" checked> Co-authorship</label>
+    <label><input type="checkbox" data-edge-type="Shared grant" checked> Shared grants</label>
+  </fieldset>
+  <fieldset class="control">
+    <span>Show</span>
+    <label><input type="checkbox" data-show-role="Current student" checked> Current students</label>
+    <label><input type="checkbox" data-show-role="Graduated student" checked> Graduated students</label>
+    <label><input type="checkbox" data-show-role="Other collaborator" checked> People outside SEEC</label>
+  </fieldset>
+  <fieldset class="control">
+    <span>View</span>
+    <label><input type="checkbox" id="net-collapse"> Collapse groups</label>
+    <button type="button" id="net-fit" class="btn btn-sm btn-outline-secondary">Fit to screen</button>
+  </fieldset>
+  <label class="control control-search">
+    <span>Find a person</span>
+    <input id="net-search" list="net-people" class="form-control form-control-sm" placeholder="Type a name…">
+    <datalist id="net-people"></datalist>
+  </label>
+</div>
+
+<div class="network-layout">
+  <div class="network-canvas-wrap">
+    <div id="network-loading">Arranging the network…</div>
+    <div id="seec-network"></div>
+  </div>
+  <aside class="network-side">
+    <div id="network-details" class="network-panel">
+      <div class="detail-empty">Click a person on the map, or search above, to see who they work with.</div>
+    </div>
+    <div id="network-legend" class="network-panel"></div>
+  </aside>
+</div>
+
+<script src="assets/network.js"></script>
+```
+
+## Most connected people
+
+```{r}
+seec_table(
+  nodes %>%
+    filter(role != "Other collaborator") %>%
+    arrange(desc(links)) %>%
+    transmute(Name = name, Role = as.character(role), Department = department,
+              Cluster = community, Connections = links,
+              `Students supervised` = n_students, Papers = n_papers, Grants = n_grants),
+  id = "network-people",
+  columns = list(Name = colDef(minWidth = 170), Cluster = colDef(minWidth = 190)),
+  page_size = 15
+)
+```
+
+::: chart-note
+Names are matched across the sheets on surname and first initial (so "Altwegg R" and "Res Altwegg" are one person), with manual corrections in `data/name_aliases.csv`. Clusters are found automatically from who works with whom and are named after their best-connected member. People outside SEEC are co-supervisors and co-authors who are not in the SEEC team, student or alumni lists.
+:::
