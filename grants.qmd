@@ -23,6 +23,13 @@ year_cols <- g$year_cols
 latest_year <- max(grants_yearly$year)
 latest <- grants_yearly %>% filter(year == latest_year)
 
+no_amounts <- sum(rowSums(as.matrix(grants[year_cols]), na.rm = TRUE) == 0)
+
+all_holders <- grants %>%
+  mutate(holder = strsplit(`Grant holder`, "\\s*/\\s*|\\s*,\\s*|\\s+and\\s+")) %>%
+  tidyr::unnest(holder) %>%
+  filter(!is.na(holder), holder != "")
+
 holders <- grants_long %>%
   mutate(holder = strsplit(`Grant holder`, "\\s*/\\s*|\\s*,\\s*|\\s+and\\s+")) %>%
   tidyr::unnest(holder) %>%
@@ -41,12 +48,14 @@ stat_row(
             fmt_money(sum(grants_yearly$total))),
   stat_tile("Average per year", fmt_money(mean(grants_yearly$total)),
             paste0(min(grants_yearly$year), "–", latest_year)),
-  stat_tile("Grants since 2019", nrow(grants),
-            paste(n_distinct(holders$holder), "grant holders"))
+  stat_tile("Grants active since 2019", nrow(grants),
+            paste(n_distinct(all_holders$holder), "grant holders ·", no_amounts, "without yearly amounts"))
 )
 ```
 
 ## Funding over time
+
+Yearly totals come from the yearly amount columns in the grants sheet. `r no_amounts` grants have no yearly amounts recorded yet, so they are not included here; recent years will rise as those are filled in.
 
 ::: chart-card
 ```{r}

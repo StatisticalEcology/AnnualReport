@@ -20,8 +20,8 @@ updated <- with_tz(Sys.time(), "Africa/Johannesburg")
 pubs <- d$pubs %>%
   mutate(
     year = suppressWarnings(as.integer(Year)),
-    # All authors is comma-separated; count names per paper
-    n_authors = lengths(strsplit(coalesce(`All authors`, ""), "\\s*,\\s*"))
+    Journal = normalise_journal(Journal),
+    n_authors = count_authors(`All authors`)
   ) %>%
   filter(!is.na(year))
 

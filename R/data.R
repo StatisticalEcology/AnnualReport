@@ -19,7 +19,7 @@ seec_read_data <- function() {
   gs4_deauth()
   
   coreteam <- read_sheet(seec_sheet, sheet = "Current core / affiliate team") %>%
-    select(Name, Department, `core / researcher / student`) %>%
+    select(Name, Department, `core / researcher / student`, HRA) %>%
     arrange(Name)
   
   # One tab holds every student; a graduation year in `endyear` marks past students
@@ -122,6 +122,7 @@ seec_team <- function(coreteam) {
         grepl("affiliate", role, ignore.case = TRUE) ~ "Affiliate",
         TRUE ~ "Other"
       ),
-      `Honorary Research Associate` = ifelse(grepl("HRA", role), "Yes", "")
+      # The sheet's own HRA column is the source of truth (role text can be stale)
+      `Honorary Research Associate` = ifelse(!is.na(HRA), "Yes", "")
     )
 }

@@ -46,6 +46,7 @@ degree_group <- function(x) {
 
 dept_group <- function(x) {
   case_when(
+    is.na(x) ~ "Not recorded",
     grepl("statistic", x, ignore.case = TRUE) ~ "Statistical Sciences",
     grepl("biolog", x, ignore.case = TRUE) ~ "Biological Sciences",
     TRUE ~ "Other"
@@ -54,8 +55,26 @@ dept_group <- function(x) {
 dept_colors <- c(
   "Statistical Sciences" = seec_col$blue,
   "Biological Sciences"  = seec_col$orange,
-  "Other"                = seec_col$aqua
+  "Other"                = seec_col$aqua,
+  "Not recorded"         = seec_col$muted
 )
+
+# Journal names differ only in capitalisation in places ("Ecology and evolution"
+# vs "Ecology and Evolution"); group case-insensitively and show the most
+# common spelling.
+normalise_journal <- function(x) {
+  key <- tolower(gsub("\\s+", " ", trimws(x)))
+  spelling <- tapply(x, key, function(v) names(sort(table(v), decreasing = TRUE))[1])
+  ifelse(is.na(x), NA_character_, unname(spelling[key]))
+}
+
+# Author lists are comma-separated, except a few "Surname, First; ..." lists
+count_authors <- function(x) {
+  x <- coalesce(x, "")
+  ifelse(x == "", 0L,
+         ifelse(grepl(";", x), lengths(strsplit(x, "\\s*;\\s*")),
+                lengths(strsplit(x, "\\s*,\\s*"))))
+}
 
 current_year <- as.integer(format(Sys.Date(), "%Y"))
 

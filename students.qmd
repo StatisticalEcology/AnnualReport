@@ -58,7 +58,6 @@ grads_last_year <- sum(graduates$Graduates[graduates$year == last_full_year])
 grads_this_year <- sum(graduates$Graduates[graduates$year == current_year])
 phd_median <- completion$median[completion$Group == "Doctorate"]
 
-current_postdocs <- d$postdocs %>% filter(Year == max(Year, na.rm = TRUE))
 ```
 
 ::: last-updated
@@ -72,19 +71,20 @@ stat_row(
                    sum(current$Group %in% c("Masters", "Coursework Masters")), " Masters")),
   stat_tile(paste("Graduates in", last_full_year), grads_last_year,
             paste(grads_this_year, "so far in", current_year)),
-  stat_tile("Graduates to date", nrow(past),
-            paste("since", min(past$end, na.rm = TRUE))),
+  stat_tile("Degrees completed", nrow(past),
+            paste0("since ", min(past$end, na.rm = TRUE), " · ",
+                   n_distinct(past$Name), " people")),
   stat_tile("Median time to PhD",
             if (length(phd_median)) paste(phd_median, "years") else "–",
             "from first registration"),
-  stat_tile("Postdocs", nrow(current_postdocs),
-            paste("in", max(d$postdocs$Year, na.rm = TRUE)))
+  stat_tile("Postdocs", nrow(d$postdocs),
+            paste(sum(d$postdocs$Year == current_year, na.rm = TRUE), "started in", current_year))
 )
 ```
 
 ## Student body over time
 
-Students counted in every year from first registration until the year they graduated.
+Students counted in every year from first registration until the year they graduated. A student who did two degrees (e.g. Masters then PhD) is counted once per degree. Students with no registration year in the sheet are left out.
 
 ::: chart-card
 ```{r}
@@ -183,13 +183,16 @@ seec_hbars(by_status, "Status", "Students",
 
 ## Postdoctoral fellows
 
+Current postdoctoral fellows by the year their position started.
+
 ```{r}
 seec_numbers(
   d$postdocs %>%
     count(Year, Department, name = "Postdocs") %>%
     pivot_wider(names_from = Department, values_from = Postdocs, values_fill = 0) %>%
-    arrange(desc(Year)),
-  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+    arrange(desc(Year)) %>%
+    rename(`Start year` = Year),
+  columns = list(`Start year` = colDef(format = colFormat(separators = FALSE)))
 )
 ```
 

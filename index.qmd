@@ -38,7 +38,7 @@ stat_row(
             paste(sum(degree_group(d$current_students$Degree) == "Doctorate"), "doctoral"),
             href = "students.html"),
   stat_tile(paste("Graduates in", last_full_year), grad_last,
-            paste(nrow(d$past_students), "graduates to date"),
+            paste(nrow(d$past_students), "degrees completed to date"),
             href = "students.html#graduates"),
   stat_tile(paste("Publications in", last_full_year), sum(pub_years == last_full_year, na.rm = TRUE),
             paste(sum(pub_years == current_year, na.rm = TRUE), "so far in", current_year),
