@@ -1,5 +1,5 @@
 ---
-title: "SEEC Publications"
+title: "Publications"
 format:
   html:
     toc: true
@@ -7,99 +7,127 @@ format:
 ---
 
 ```{r}
+library(lubridate)
 library(dplyr)
 library(tidyr)
-library(knitr)
-library(ggplot2)
-library(DT)
 
-# Option A: If you already have a dataframe named `pubs` in the environment,
-# comment out the CSV section below.
-
-# Option B: Read from a CSV (recommended)
 source("R/data.R")
+source("R/viz.R")
 d <- seec_read_data()
 
-# Basic cleaning / type safety
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
 pubs <- d$pubs %>%
   mutate(
-    year  = suppressWarnings(as.integer(year)),
-    cites = suppressWarnings(as.numeric(cites))
-  )
-```
+    year = suppressWarnings(as.integer(Year)),
+    # All authors is comma-separated; count names per paper
+    n_authors = lengths(strsplit(coalesce(`All authors`, ""), "\\s*,\\s*"))
+  ) %>%
+  filter(!is.na(year))
 
-## Yearly summary table 
-
-```{r}
 pubs_yearly <- pubs %>%
-  filter(!is.na(year)) %>%
   group_by(year) %>%
   summarise(
-    publications   = n(),
-    total_citations = sum(cites, na.rm = TRUE),
-    mean_citations  = round(mean(cites, na.rm = TRUE), 1),
-    journals        = n_distinct(journal),
-    highly_cited_100 = sum(cites >= 100, na.rm = TRUE),
+    publications = n(),
+    journals     = n_distinct(Journal, na.rm = TRUE),
+    median_authors = median(n_authors[n_authors > 0]),
     .groups = "drop"
   ) %>%
-  arrange(desc(year))
+  arrange(year)
 
-kable(
-  pubs_yearly,
-  col.names = c(
-    "Year",
-    "Publications",
-    "Total citations",
-    "Mean citations",
-    "Distinct journals",
-    "Highly cited (≥100)"
+last_full_year <- current_year - 1
+n_last <- sum(pubs$year == last_full_year)
+n_prev <- sum(pubs$year == last_full_year - 1)
+n_now  <- sum(pubs$year == current_year)
+change <- if (n_prev > 0) round(100 * (n_last - n_prev) / n_prev) else NA
+```
+
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")`
+:::
+
+```{r}
+stat_row(
+  stat_tile(paste("Publications in", last_full_year), n_last,
+            if (!is.na(change)) paste0(ifelse(change >= 0, "+", ""), change, "% vs ", last_full_year - 1)),
+  stat_tile(paste(current_year, "so far"), n_now),
+  stat_tile("Publications to date", fmt_num(nrow(pubs)),
+            paste0(min(pubs$year), "–", max(pubs$year))),
+  stat_tile("Journals", n_distinct(pubs$Journal, na.rm = TRUE),
+            "distinct journals published in"),
+  stat_tile("Median authors per paper", median(pubs$n_authors[pubs$n_authors > 0]),
+            "a measure of collaboration")
+)
+```
+
+## Output over time
+
+::: chart-card
+```{r}
+seec_columns(
+  pubs_yearly, "year", "publications",
+  title = "SEEC-affiliated publications per year",
+  subtitle = paste0(current_year, " (lighter bar) is still in progress"),
+  partial = current_year,
+  unit = " publications"
+)
+```
+:::
+
+```{r}
+numbers_view(seec_numbers(
+  pubs_yearly %>%
+    arrange(desc(year)) %>%
+    transmute(Year = year, Publications = publications,
+              `Distinct journals` = journals, `Median authors` = median_authors),
+  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+))
+```
+
+## Where SEEC publishes
+
+```{r}
+top_journals <- pubs %>%
+  filter(!is.na(Journal)) %>%
+  count(Journal, name = "papers", sort = TRUE) %>%
+  slice_head(n = 12)
+```
+
+::: chart-card
+```{r}
+seec_hbars(
+  top_journals, "Journal", "papers",
+  title = "Most frequent journals",
+  subtitle = paste0("Top 12 · ", min(pubs$year), "–", max(pubs$year)),
+  label_fmt = function(v) paste(v, "papers")
+)
+```
+:::
+
+## All publications
+
+```{r}
+pubs_table <- pubs %>%
+  arrange(desc(year), Title) %>%
+  mutate(doi_id = sub("^https?://(dx\\.)?doi\\.org/", "", DOI)) %>%
+  select(Year = year, Title, Journal, `SEEC author(s)`, DOI = doi_id)
+
+seec_table(
+  pubs_table,
+  id = "publications",
+  columns = list(
+    Year = colDef(maxWidth = 80),
+    Title = colDef(minWidth = 320),
+    Journal = colDef(minWidth = 180),
+    `SEEC author(s)` = colDef(minWidth = 180),
+    DOI = colDef(
+      minWidth = 120,
+      cell = function(v) {
+        if (is.na(v) || v == "") return("")
+        htmltools::tags$a(href = paste0("https://doi.org/", v), target = "_blank", "Open")
+      }
+    )
   ),
-  caption = "Summary of SEEC-affiliated publications by year"
+  page_size = 25
 )
 ```
-
-## Publications per year
-
-```{r}
-ggplot(pubs_yearly, aes(x = year, y = publications)) +
-  geom_col() +
-  labs(
-    x = "Year",
-    y = "Number of publications",
-    title = "SEEC-affiliated publications per year"
-  ) +
-  theme_minimal()
-```
-
-## Yearly highlights (top 3 most cited per year)
-
-```{r}
-top_by_year <- pubs %>%
-  filter(!is.na(year)) %>%
-  arrange(year, desc(cites)) %>%
-  group_by(year) %>%
-  slice_head(n = 3) %>%
-  ungroup() %>%
-  select(year, title, journal, cites) %>%
-  arrange(desc(year), desc(cites))
-
-kable(
-  top_by_year,
-  col.names = c("Year", "Title", "Journal", "Citations"),
-  caption = "Top 3 most cited publications per year"
-)
-```
-
----
-
-## Full publications table 
-
-```{r}
-DT::datatable(
-  pubs %>% arrange(desc(year), desc(cites)),
-  options = list(pageLength = 25, scrollX = TRUE),
-  rownames = FALSE
-)
-```
-
-

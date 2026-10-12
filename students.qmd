@@ -4,125 +4,210 @@ title: "Students"
 
 ```{r}
 library(lubridate)
-library(DT)
 library(dplyr)
+library(tidyr)
 
 source("R/data.R")
+source("R/viz.R")
 d <- seec_read_data()
 
 updated <- with_tz(Sys.time(), "Africa/Johannesburg")
 
-all_students <- bind_rows(
-  d$current_students %>% mutate(Record = "Current"),
-  d$past_students %>% mutate(Record = "Past")
-)
+current <- d$current_students %>%
+  mutate(Group = degree_group(Degree), start = `First registered`)
 
+past <- d$past_students %>%
+  mutate(Group = degree_group(Degree), start = `First Registered`,
+         end = `Graduation Year`)
 
-# Summary tables (current students)
-deg_counts <- d$current_students %>%
-  count(Degree, name = "Students") %>%
-  arrange(desc(Students))
+# Everyone with a known start year, with the year they left (NA = still registered)
+cohort <- bind_rows(
+  current %>% transmute(Group, start, end = NA_integer_),
+  past %>% transmute(Group, start, end)
+) %>%
+  filter(!is.na(start))
 
-year_degree_counts <- d$current_students %>%
-  count(`First registered`, Degree, name = "Students") %>%
-  tidyr::pivot_wider(
-    names_from = Degree,
-    values_from = Students,
-    values_fill = 0
+first_year <- max(min(cohort$start), 2014)
+years <- first_year:current_year
+
+# Students registered in each year: started on/before it and not yet graduated
+enrolled <- tidyr::expand_grid(year = years, cohort) %>%
+  filter(start <= year, is.na(end) | end >= year) %>%
+  count(year, Group, name = "Students")
+
+graduates <- past %>%
+  filter(!is.na(end)) %>%
+  count(year = end, Group, name = "Graduates")
+
+completion <- past %>%
+  filter(!is.na(end), !is.na(start), end >= start) %>%
+  mutate(years_taken = end - start) %>%
+  group_by(Group) %>%
+  summarise(
+    n = n(),
+    median = median(years_taken),
+    range = paste0(min(years_taken), "–", max(years_taken), " years"),
+    .groups = "drop"
   ) %>%
-  arrange(desc(`First registered`))
+  filter(!Group %in% c("Unknown", "Honours"), n >= 3) %>%
+  mutate(Group = as.character(Group),
+         hover = paste0(n, " graduates · range ", range))
 
+last_full_year <- current_year - 1
+grads_last_year <- sum(graduates$Graduates[graduates$year == last_full_year])
+grads_this_year <- sum(graduates$Graduates[graduates$year == current_year])
+phd_median <- completion$median[completion$Group == "Doctorate"]
 
-year_grad_counts <- d$past_students %>%
-  count(`Graduation Year`, Degree, name = "Students") %>%
-  tidyr::pivot_wider(
-    names_from = Degree,
-    values_from = Students,
-    values_fill = 0
-  ) %>%
-  filter(`Graduation Year` != "Deregistered") %>%
-  arrange(desc(`Graduation Year`)) 
-
-year_postdoc_counts <- d$postdocs %>%
-  count(Year, Department, name = "Students") %>%
-  tidyr::pivot_wider(
-    names_from = Department,
-    values_from = Students,
-    values_fill = 0
-  ) %>%
-  arrange(desc(Year))
-
+current_postdocs <- d$postdocs %>% filter(Year == max(Year, na.rm = TRUE))
 ```
 
-**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
-
-## Registered students
-
-This table summarises the number of currently registered SEEC postgraduate students, broken down by first year of registration and degree type. It provides an overview of cohort sizes over time and highlights the current balance between PhD and Masters students.
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")`
+:::
 
 ```{r}
-DT::datatable(
-year_degree_counts,
-rownames = FALSE,
-options = list(
-dom = "t",
-pageLength = nrow(year_degree_counts),
-scrollX = TRUE
+stat_row(
+  stat_tile("Registered students", nrow(current),
+            paste0(sum(current$Group == "Doctorate"), " doctoral · ",
+                   sum(current$Group %in% c("Masters", "Coursework Masters")), " Masters")),
+  stat_tile(paste("Graduates in", last_full_year), grads_last_year,
+            paste(grads_this_year, "so far in", current_year)),
+  stat_tile("Graduates to date", nrow(past),
+            paste("since", min(past$end, na.rm = TRUE))),
+  stat_tile("Median time to PhD",
+            if (length(phd_median)) paste(phd_median, "years") else "–",
+            "from first registration"),
+  stat_tile("Postdocs", nrow(current_postdocs),
+            paste("in", max(d$postdocs$Year, na.rm = TRUE)))
 )
-)
-
 ```
 
-## Graduated students
+## Student body over time
 
-This table summarises SEEC postgraduate students who have graduated, grouped by graduation year and degree type. It provides an overview of student throughput and completion patterns over recent years.
+Students counted in every year from first registration until the year they graduated.
+
+::: chart-card
+```{r}
+seec_stacked(
+  enrolled, "year", "Group", "Students", degree_colors,
+  title = "Registered students per year",
+  subtitle = "By degree type",
+  unit = " students"
+)
+```
+:::
 
 ```{r}
-DT::datatable(
-year_grad_counts,
-rownames = FALSE,
-options = list(
-dom = "t",
-pageLength = nrow(year_degree_counts),
-scrollX = TRUE
-)
-)
-
+numbers_view(seec_numbers(
+  enrolled %>%
+    pivot_wider(names_from = Group, values_from = Students, values_fill = 0) %>%
+    mutate(Total = rowSums(across(-year))) %>%
+    arrange(desc(year)) %>%
+    rename(Year = year),
+  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+))
 ```
 
-## Postdoc students
+## Graduates
 
-This table summarises SEEC postdoctoral researchers, grouped by year and host department. It provides an overview of postdoctoral involvement across departments and time.
+::: chart-card
+```{r}
+seec_stacked(
+  graduates, "year", "Group", "Graduates", degree_colors,
+  title = "Graduates per year",
+  subtitle = paste0("By degree type · ", current_year, " is still in progress"),
+  unit = " graduates"
+)
+```
+:::
 
 ```{r}
-DT::datatable(
-year_postdoc_counts,
-rownames = FALSE,
-options = list(
-dom = "t",
-pageLength = nrow(year_postdoc_counts),
-scrollX = TRUE
-)
-)
-
+numbers_view(seec_numbers(
+  graduates %>%
+    pivot_wider(names_from = Group, values_from = Graduates, values_fill = 0) %>%
+    mutate(Total = rowSums(across(-year))) %>%
+    arrange(desc(year)) %>%
+    rename(Year = year),
+  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+))
 ```
 
-## Detailed table of students
+::: chart-card
+```{r}
+seec_hbars(
+  completion, "Group", "median",
+  title = "Median time to completion",
+  subtitle = "Years from first registration to graduation · hover for range",
+  label_fmt = function(v) paste(v, "yrs"),
+  hover_extra = "hover"
+)
+```
+:::
+
+::: chart-note
+Calculated from start and graduation years, so it is accurate to about a year. Honours (a one-year degree) and degree types with fewer than three graduates are not shown.
+:::
+
+## Current students
+
+```{r}
+by_dept <- current %>%
+  mutate(Dept = dept_group(Department)) %>%
+  count(Dept, name = "Students")
+
+by_status <- current %>%
+  mutate(Status = sentence_case(coalesce(Status, "Not recorded"))) %>%
+  count(Status, name = "Students")
+```
+
+:::: {.columns}
+::: {.column width="49%"}
+::: chart-card
+```{r}
+seec_hbars(by_dept, "Dept", "Students",
+           title = "By department", colors = dept_colors, color_by = "Dept")
+```
+:::
+:::
+::: {.column width="2%"}
+:::
+::: {.column width="49%"}
+::: chart-card
+```{r}
+seec_hbars(by_status, "Status", "Students",
+           title = "By status")
+```
+:::
+:::
+::::
+
+## Postdoctoral fellows
+
+```{r}
+seec_numbers(
+  d$postdocs %>%
+    count(Year, Department, name = "Postdocs") %>%
+    pivot_wider(names_from = Department, values_from = Postdocs, values_fill = 0) %>%
+    arrange(desc(Year)),
+  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+)
+```
+
+## All students
 
 ::: panel-tabset
 ## Current students
 
 ```{r}
-DT::datatable(
-  d$current_students,
-  rownames = FALSE,
-  filter = "top",
-  extensions = "Buttons",
-  options = list(
-    dom = "Bfrtip",
-    buttons = c("copy", "csv", "excel"),
-    pageLength = 25,
-    scrollX = TRUE
+seec_table(
+  d$current_students %>% mutate(Status = sentence_case(Status)),
+  id = "current-students",
+  columns = list(
+    Name = colDef(minWidth = 160),
+    `First registered` = colDef(name = "Registered", maxWidth = 110, align = "right"),
+    Department = colDef(minWidth = 150),
+    Title = colDef(minWidth = 320),
+    Supervisors = colDef(minWidth = 200)
   )
 )
 ```
@@ -130,16 +215,16 @@ DT::datatable(
 ## Past students
 
 ```{r}
-DT::datatable(
-  d$past_students,
-  rownames = FALSE,
-  filter = "top",
-  extensions = "Buttons",
-  options = list(
-    dom = "Bfrtip",
-    buttons = c("copy", "csv", "excel"),
-    pageLength = 25,
-    scrollX = TRUE
+seec_table(
+  d$past_students %>% arrange(desc(`Graduation Year`), Name),
+  id = "past-students",
+  columns = list(
+    Name = colDef(minWidth = 160),
+    `First Registered` = colDef(name = "Registered", maxWidth = 110, align = "right"),
+    `Graduation Year` = colDef(name = "Graduated", maxWidth = 110, align = "right"),
+    Department = colDef(minWidth = 150),
+    Title = colDef(minWidth = 320),
+    Supervisors = colDef(minWidth = 200)
   )
 )
 ```

@@ -4,89 +4,136 @@ title: "Grants"
 
 ```{r}
 library(lubridate)
-library(DT)
 library(dplyr)
 library(tidyr)
 library(readr)
 
 source("R/data.R")
+source("R/viz.R")
 d <- seec_read_data()
 
 updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
+g <- seec_grants(d$grantlist)
+grants <- g$grants
+grants_long <- g$long
+grants_yearly <- g$yearly
+year_cols <- g$year_cols
+
+latest_year <- max(grants_yearly$year)
+latest <- grants_yearly %>% filter(year == latest_year)
+
+holders <- grants_long %>%
+  mutate(holder = strsplit(`Grant holder`, "\\s*/\\s*|\\s*,\\s*|\\s+and\\s+")) %>%
+  tidyr::unnest(holder) %>%
+  filter(!is.na(holder), holder != "")
 ```
 
-**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")` · Amounts in South African Rand
+:::
 
 ```{r}
-# Clean + filter grants (keep 2019+; show yearly amounts 2019–2024)
-grantlist_mod <- d$grantlist %>%
-  tidyr::drop_na(`End Year`) %>%
-  rename(`Project Name` = Funder) %>%
-  mutate(
-    `Start Year` = suppressWarnings(as.integer(`Start Year`)),
-    `End Year`   = suppressWarnings(as.integer(`End Year`)),
-    `Start and End` = paste0(`Start Year`, " - ", `End Year`)
-  ) %>%
-  filter(`End Year` >= 2019) %>%
-  select(
-    `Project Name`,
+stat_row(
+  stat_tile(paste("Funding in", latest_year), fmt_money(latest$total),
+            paste(latest$active, "grants with funding that year")),
+  stat_tile(paste0("Funding ", min(grants_yearly$year), "–", latest_year),
+            fmt_money(sum(grants_yearly$total))),
+  stat_tile("Average per year", fmt_money(mean(grants_yearly$total)),
+            paste0(min(grants_yearly$year), "–", latest_year)),
+  stat_tile("Grants since 2019", nrow(grants),
+            paste(n_distinct(holders$holder), "grant holders"))
+)
+```
+
+## Funding over time
+
+::: chart-card
+```{r}
+seec_columns(
+  grants_yearly, "year", "total",
+  title = "Grant funding per year",
+  subtitle = "Sum of yearly amounts across all grants",
+  hover_fmt = function(v) paste0("R", fmt_num(v)),
+  yprefix = "R", yformat = "~s"
+)
+```
+:::
+
+::: chart-card
+```{r}
+seec_columns(
+  grants_yearly, "year", "active",
+  title = "Grants with funding each year",
+  subtitle = "Number of grants with a non-zero amount in that year",
+  unit = " grants"
+)
+```
+:::
+
+```{r}
+numbers_view(seec_numbers(
+  grants_yearly %>%
+    arrange(desc(year)) %>%
+    transmute(Year = year, `Funding (R)` = total, Grants = active),
+  columns = list(Year = colDef(format = colFormat(separators = FALSE)))
+))
+```
+
+## Grant holders
+
+```{r}
+holder_totals <- holders %>%
+  group_by(holder) %>%
+  summarise(total = sum(amount), grants = n_distinct(Funder), .groups = "drop") %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 10) %>%
+  mutate(hover = paste(grants, ifelse(grants == 1, "grant", "grants")))
+```
+
+::: chart-card
+```{r}
+seec_hbars(
+  holder_totals, "holder", "total",
+  title = "Top 10 grant holders by funding",
+  subtitle = paste0(min(grants_yearly$year), "–", latest_year,
+                    " · shared grants count in full for each holder"),
+  label_fmt = fmt_money,
+  hover_extra = "hover",
+  xformat = "~s", xprefix = "R"
+)
+```
+:::
+
+## All grants
+
+```{r}
+grant_table <- grants %>%
+  transmute(
+    Project = Funder,
     `Grant holder`,
-    `Start and End`,
-    matches("^2019$|^202[0-4]$")
-  )
+    Period = paste0(`Start Year`, "–", `End Year`),
+    across(all_of(year_cols))
+  ) %>%
+  arrange(desc(Period))
 
-# Ensure year columns are numeric (handles commas/currency/blank)
-year_cols <- names(grantlist_mod)[4:ncol(grantlist_mod)]
-grantlist_mod <- grantlist_mod %>%
-  mutate(across(all_of(year_cols), ~ readr::parse_number(as.character(.x))))
+money_col <- function(col) colDef(
+  align = "right", minWidth = 100,
+  cell = function(v) if (is.na(v) || v == 0) "" else fmt_num(v),
+  footer = function(values) fmt_num(sum(values, na.rm = TRUE))
+)
 
-# Totals row
-totals <- grantlist_mod %>%
-  summarise(across(all_of(year_cols), ~ sum(.x, na.rm = TRUE))) %>%
-  mutate(`Project Name` = "Total", `Grant holder` = "", `Start and End` = "") %>%
-  select(names(grantlist_mod))
-
-grantlist_mod_with_totals <- bind_rows(grantlist_mod, totals)
-
-# Format year columns for display (no scientific notation; blanks for NA)
-grantlist_display <- grantlist_mod_with_totals %>%
-  mutate(across(all_of(year_cols), ~ ifelse(is.na(.x), "", format(.x, big.mark = ",", scientific = FALSE))))
-
-# Use the numeric version BEFORE you add the totals row
-grants_yearly <- grantlist_mod %>%
-  select(all_of(year_cols)) %>%
-  pivot_longer(cols = everything(), names_to = "year", values_to = "amount") %>%
-  mutate(year = as.integer(year)) %>%
-  group_by(year) %>%
-  summarise(total = sum(amount, na.rm = TRUE), .groups = "drop") %>%
-  arrange(year)
-
-```
-
-```{r}
-library(ggplot2)
-library(scales)
-
-ggplot(grants_yearly, aes(x = year, y = total)) +
-    geom_col() +
-    scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
-    labs(title = "Total grant funding per year", x = NULL, y = "Total funding")
-
-```
-
-
-```{r}
-DT::datatable(
-  grantlist_display,
-  rownames = FALSE,
-  filter = "top",
-  extensions = "Buttons",
-  options = list(
-    dom = "Bfrtip",
-    buttons = c("copy", "csv", "excel"),
-    pageLength = 25,
-    scrollX = TRUE
+seec_table(
+  grant_table,
+  id = "grants",
+  columns = c(
+    list(
+      Project = colDef(minWidth = 200, footer = "Total"),
+      `Grant holder` = colDef(minWidth = 200),
+      Period = colDef(minWidth = 100)
+    ),
+    setNames(lapply(year_cols, money_col), year_cols)
   ),
-  width = "100%"
+  page_size = 25
 )
 ```

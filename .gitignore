@@ -49,3 +49,6 @@ po/*~
 rsconnect/
 
 /.quarto/
+
+# Rendered site (built and published to gh-pages by CI)
+/_site/

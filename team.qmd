@@ -1,3 +1,53 @@
+---
+title: "Team"
+---
+
+```{r}
+library(lubridate)
+library(dplyr)
+
+source("R/data.R")
+source("R/viz.R")
+d <- seec_read_data()
+
+updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+
+team <- seec_team(d$coreteam)
+```
+
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")`
+:::
+
+```{r}
+stat_row(
+  stat_tile("Team members", nrow(team)),
+  stat_tile("Leadership team", sum(team$Role == "Leadership team")),
+  stat_tile("Core members", sum(team$Role %in% c("Core", "Core (postdoc)")),
+            paste(sum(team$Role == "Core (postdoc)"), "postdocs")),
+  stat_tile("Affiliates", sum(team$Role == "Affiliate"),
+            paste(sum(team$`Honorary Research Associate` == "Yes"), "Honorary Research Associates")),
+  stat_tile("Departments & organisations", n_distinct(team$Department, na.rm = TRUE))
+)
+```
+
+# Current team
+
+```{r}
+seec_table(
+  team %>%
+    arrange(factor(Role, levels = c("Leadership team", "Core", "Core (postdoc)", "Affiliate", "Other")), Name) %>%
+    select(Name, Role, Department, `Honorary Research Associate`),
+  id = "team",
+  columns = list(
+    Name = colDef(minWidth = 180),
+    Department = colDef(minWidth = 220),
+    `Honorary Research Associate` = colDef(name = "HRA", maxWidth = 90, align = "center")
+  ),
+  page_size = 50
+)
+```
+
 
 # Leadership team 
 
@@ -57,7 +107,7 @@ admin, practical support for proposal writing.
 
 # Affiliations
 
-The SEEC leadership team decided to present our members in three groups: leadership team, rest of the core team and affiliates. We used the below guidelines on what is expected of the different categories of affiliation to decide who should be a core member vs affiliate. This was circulated to the all SEEC members for feedback and adjusted on the website accordingly. The curren team and affiliations can be seen in Table @tab:affaca.
+The SEEC leadership team decided to present our members in three groups: leadership team, rest of the core team and affiliates. We used the below guidelines on what is expected of the different categories of affiliation to decide who should be a core member vs affiliate. This was circulated to the all SEEC members for feedback and adjusted on the website accordingly. The current team and their affiliations are listed in the table at the top of this page.
 
 **SEEC Academics and Postdoctoral Fellows (Core Team)**
 
@@ -152,33 +202,3 @@ The SEEC leadership team decided to present our members in three groups: leaders
     Friends.
 -   Are on the seec-friends-l mailing list or keep themselves in the
     loop through the SEEC facebook page, twitter or web site.
-
-
-```{r}
-library(lubridate)
-library(DT)
-library(dplyr)
-library(googlesheets4)
-
-source("R/data.R")
-d <- seec_read_data()
-
-updated <- with_tz(Sys.time(), "Africa/Johannesburg")
-```
-
-**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
-
-```{r}
-DT::datatable(
-  d$coreteam,
-  rownames = FALSE,
-  filter = "top",
-  extensions = "Buttons",
-  options = list(
-    dom = "Bfrtip",
-    buttons = c("copy", "csv", "excel"),
-    pageLength = 25,
-    scrollX = TRUE
-  )
-)
-```

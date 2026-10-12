@@ -1,15 +1,83 @@
 ---
-title: "Home"
+title: "SEEC at a glance"
+toc: false
 ---
 
 ```{r}
 library(lubridate)
-library(googlesheets4)
+library(dplyr)
+
+source("R/data.R")
+source("R/viz.R")
+d <- seec_read_data()
+
 updated <- with_tz(Sys.time(), "Africa/Johannesburg")
+last_full_year <- current_year - 1
+
+pub_years <- suppressWarnings(as.integer(d$pubs$Year))
+grad_last <- sum(d$past_students$`Graduation Year` == last_full_year, na.rm = TRUE)
+
+grant_latest <- tail(seec_grants(d$grantlist)$yearly, 1)
+
+team <- seec_team(d$coreteam)
+team_core <- sum(team$Role %in% c("Leadership team", "Core", "Core (postdoc)"))
+team_affiliates <- sum(team$Role == "Affiliate")
 ```
 
-**Last updated:** `r format(updated, "%Y-%m-%d %H:%M %Z")`
+::: last-updated
+Last updated `r format(updated, "%d %B %Y, %H:%M %Z")`
+:::
 
-This site presents annual statistics and summaries as a live, web-based document.
+::: lead-text
+Annual statistics for the Centre for Statistics in Ecology, Environment and Conservation (SEEC), built directly from the SEEC Google Sheets and refreshed automatically each day the sheets change. Select a figure to see the detail.
+:::
 
-All tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt - still working on this. 
+```{r}
+stat_row(
+  stat_tile("Registered students", nrow(d$current_students),
+            paste(sum(degree_group(d$current_students$Degree) == "Doctorate"), "doctoral"),
+            href = "students.html"),
+  stat_tile(paste("Graduates in", last_full_year), grad_last,
+            paste(nrow(d$past_students), "graduates to date"),
+            href = "students.html#graduates"),
+  stat_tile(paste("Publications in", last_full_year), sum(pub_years == last_full_year, na.rm = TRUE),
+            paste(sum(pub_years == current_year, na.rm = TRUE), "so far in", current_year),
+            href = "publications.html"),
+  stat_tile(paste("Grant funding in", grant_latest$year), fmt_money(grant_latest$total),
+            "South African Rand", href = "grants.html"),
+  stat_tile("Team", nrow(d$coreteam),
+            paste(team_core, "core ·", team_affiliates, "affiliates"),
+            href = "team.html")
+)
+```
+
+## Trends
+
+:::: {.columns}
+::: {.column width="49%"}
+::: chart-card
+```{r}
+pubs_yearly <- tibble(year = pub_years) %>% filter(!is.na(year)) %>% count(year, name = "n")
+seec_columns(pubs_yearly, "year", "n",
+             title = "Publications per year",
+             subtitle = paste(current_year, "in progress"),
+             partial = current_year, unit = " publications",
+             height = 300)
+```
+:::
+:::
+::: {.column width="2%"}
+:::
+::: {.column width="49%"}
+::: chart-card
+```{r}
+grads_yearly <- d$past_students %>% count(year = `Graduation Year`, name = "n")
+seec_columns(grads_yearly, "year", "n",
+             title = "Graduates per year",
+             subtitle = paste(current_year, "in progress"),
+             partial = current_year, unit = " graduates",
+             height = 300)
+```
+:::
+:::
+::::
