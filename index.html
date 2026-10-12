@@ -2,20 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Home – SEEC Annual Statistics and Report</title>
+<title>SEEC at a glance – SEEC Annual Statistics and Report</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-88eeed94e0167a0e0009b9ddf257676f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,6 +73,14 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 
 
 </head>
@@ -126,15 +137,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Home</h1>
+<h1 class="title">SEEC at a glance</h1>
 </div>
 
 
@@ -151,11 +160,71 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><strong>Last updated:</strong> 2026-04-17 08:20 SAST</p>
-<p>This site presents annual statistics and summaries as a live, web-based document.</p>
-<p>All tables are generated directly from the SEEC Google Sheets and update automatically whenever the site is rebuilt - still working on this.</p>
+<div class="last-updated">
+<p>Last updated 12 October 2026, 18:50 SAST</p>
+</div>
+<div class="lead-text">
+<p>Annual statistics for the Centre for Statistics in Ecology, Environment and Conservation (SEEC), built directly from the SEEC Google Sheets and refreshed automatically each day the sheets change. Select a figure to see the detail.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="stat-row">
+<a class="stat-tile stat-link" href="students.html">
+<div class="stat-label">Registered students</div>
+<div class="stat-value">38</div>
+<div class="stat-note">20 doctoral</div>
+</a>
+<a class="stat-tile stat-link" href="students.html#graduates">
+<div class="stat-label">Graduates in 2025</div>
+<div class="stat-value">5</div>
+<div class="stat-note">92 graduates to date</div>
+</a>
+<a class="stat-tile stat-link" href="publications.html">
+<div class="stat-label">Publications in 2025</div>
+<div class="stat-value">36</div>
+<div class="stat-note">32 so far in 2026</div>
+</a>
+<a class="stat-tile stat-link" href="grants.html">
+<div class="stat-label">Grant funding in 2025</div>
+<div class="stat-value">R893K</div>
+<div class="stat-note">South African Rand</div>
+</a>
+<a class="stat-tile stat-link" href="team.html">
+<div class="stat-label">Team</div>
+<div class="stat-value">35</div>
+<div class="stat-note">16 core · 18 affiliates</div>
+</a>
+</div>
+</div>
+</div>
+<section id="trends" class="level2">
+<h2 class="anchored" data-anchor-id="trends">Trends</h2>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="chart-card">
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-1e96d5741d3875f1f3f2" style="width:100%;height:290px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1e96d5741d3875f1f3f2">{"x":{"visdat":{"1cd37f2d5163":["function () ","plotlyVisDat"]},"cur_data":"1cd37f2d5163","attrs":{"1cd37f2d5163":{"x":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"y":[11,21,43,39,40,46,37,44,50,41,46,36,32],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#b7d3f6"]},"text":["<b>2014<\/b><br>11 publications","<b>2015<\/b><br>21 publications","<b>2016<\/b><br>43 publications","<b>2017<\/b><br>39 publications","<b>2018<\/b><br>40 publications","<b>2019<\/b><br>46 publications","<b>2020<\/b><br>37 publications","<b>2021<\/b><br>44 publications","<b>2022<\/b><br>50 publications","<b>2023<\/b><br>41 publications","<b>2024<\/b><br>46 publications","<b>2025<\/b><br>36 publications","<b>2026 (to date)<\/b><br>32 publications"],"hoverinfo":"text","textposition":"none","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"height":300,"margin":{"b":40,"l":10,"t":70,"r":20},"title":{"text":"<b>Publications per year<\/b><br><span style='font-size:12px;color:#898781'>2026 in progress<\/span>","x":0,"xanchor":"left","xref":"paper","y":1,"yanchor":"top","yref":"container","pad":{"t":10},"font":{"size":15,"color":"#0b0b0b"}},"font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":13,"color":"#52514e"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","xaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"showgrid":false,"linecolor":"#c3c2b7","linewidth":1,"tickfont":{"color":"#52514e"},"fixedrange":true,"type":"category","categoryorder":"array","categoryarray":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026]},"yaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"gridcolor":"#e1e0d9","gridwidth":1,"zeroline":true,"zerolinecolor":"#c3c2b7","zerolinewidth":1,"tickformat":",d","tickprefix":"","rangemode":"tozero","tickfont":{"color":"#898781"},"fixedrange":true},"showlegend":false,"legend":{"orientation":"h","x":0,"xanchor":"left","y":1.02,"yanchor":"bottom","font":{"size":12,"color":"#52514e"},"traceorder":"normal"},"hoverlabel":{"bgcolor":"#ffffff","bordercolor":"#e1e0d9","font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":12,"color":"#0b0b0b"}},"bargap":0.34999999999999998,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false,"responsive":true},"data":[{"x":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"y":[11,21,43,39,40,46,37,44,50,41,46,36,32],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#b7d3f6"],"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>2014<\/b><br>11 publications","<b>2015<\/b><br>21 publications","<b>2016<\/b><br>43 publications","<b>2017<\/b><br>39 publications","<b>2018<\/b><br>40 publications","<b>2019<\/b><br>46 publications","<b>2020<\/b><br>37 publications","<b>2021<\/b><br>44 publications","<b>2022<\/b><br>50 publications","<b>2023<\/b><br>41 publications","<b>2024<\/b><br>46 publications","<b>2025<\/b><br>36 publications","<b>2026 (to date)<\/b><br>32 publications"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"textposition":["none","none","none","none","none","none","none","none","none","none","none","none","none"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:49%;">
+<div class="chart-card">
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-11dfc0f8c906f1dbf2e1" style="width:100%;height:290px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-11dfc0f8c906f1dbf2e1">{"x":{"visdat":{"1cd36a12ba07":["function () ","plotlyVisDat"]},"cur_data":"1cd36a12ba07","attrs":{"1cd36a12ba07":{"x":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"y":[3,2,10,5,17,7,9,8,9,8,3,5,6],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#b7d3f6"]},"text":["<b>2014<\/b><br>3 graduates","<b>2015<\/b><br>2 graduates","<b>2016<\/b><br>10 graduates","<b>2017<\/b><br>5 graduates","<b>2018<\/b><br>17 graduates","<b>2019<\/b><br>7 graduates","<b>2020<\/b><br>9 graduates","<b>2021<\/b><br>8 graduates","<b>2022<\/b><br>9 graduates","<b>2023<\/b><br>8 graduates","<b>2024<\/b><br>3 graduates","<b>2025<\/b><br>5 graduates","<b>2026 (to date)<\/b><br>6 graduates"],"hoverinfo":"text","textposition":"none","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"height":300,"margin":{"b":40,"l":10,"t":70,"r":20},"title":{"text":"<b>Graduates per year<\/b><br><span style='font-size:12px;color:#898781'>2026 in progress<\/span>","x":0,"xanchor":"left","xref":"paper","y":1,"yanchor":"top","yref":"container","pad":{"t":10},"font":{"size":15,"color":"#0b0b0b"}},"font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":13,"color":"#52514e"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","xaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"showgrid":false,"linecolor":"#c3c2b7","linewidth":1,"tickfont":{"color":"#52514e"},"fixedrange":true,"type":"category","categoryorder":"array","categoryarray":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026]},"yaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"gridcolor":"#e1e0d9","gridwidth":1,"zeroline":true,"zerolinecolor":"#c3c2b7","zerolinewidth":1,"tickformat":",d","tickprefix":"","rangemode":"tozero","tickfont":{"color":"#898781"},"fixedrange":true},"showlegend":false,"legend":{"orientation":"h","x":0,"xanchor":"left","y":1.02,"yanchor":"bottom","font":{"size":12,"color":"#52514e"},"traceorder":"normal"},"hoverlabel":{"bgcolor":"#ffffff","bordercolor":"#e1e0d9","font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":12,"color":"#0b0b0b"}},"bargap":0.34999999999999998,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false,"responsive":true},"data":[{"x":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"y":[3,2,10,5,17,7,9,8,9,8,3,5,6],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#b7d3f6"],"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>2014<\/b><br>3 graduates","<b>2015<\/b><br>2 graduates","<b>2016<\/b><br>10 graduates","<b>2017<\/b><br>5 graduates","<b>2018<\/b><br>17 graduates","<b>2019<\/b><br>7 graduates","<b>2020<\/b><br>9 graduates","<b>2021<\/b><br>8 graduates","<b>2022<\/b><br>9 graduates","<b>2023<\/b><br>8 graduates","<b>2024<\/b><br>3 graduates","<b>2025<\/b><br>5 graduates","<b>2026 (to date)<\/b><br>6 graduates"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text"],"textposition":["none","none","none","none","none","none","none","none","none","none","none","none","none"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

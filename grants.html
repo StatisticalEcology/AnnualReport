@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-88eeed94e0167a0e0009b9ddf257676f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,25 +73,21 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="site_libs/datatables-binding-0.34.0/datatables.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="site_libs/jszip-1.13.6/jszip.min.js"></script>
-<link href="site_libs/dt-ext-buttons-1.13.6/css/buttons.dataTables.min.css" rel="stylesheet">
-<script src="site_libs/dt-ext-buttons-1.13.6/js/dataTables.buttons.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.html5.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.colVis.min.js"></script>
-<script src="site_libs/dt-ext-buttons-1.13.6/js/buttons.print.min.js"></script>
-<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
-<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
-<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="site_libs/plotly-binding-4.12.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
 <script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-18.2.0/react.min.js"></script>
+<script src="site_libs/react-18.2.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-2.0.0/react-tools.js"></script>
+<link href="site_libs/reactable-0.4.5/reactable.css" rel="stylesheet">
+<script src="site_libs/reactable-binding-0.4.5/reactable.js"></script>
 
 
 </head>
@@ -145,11 +144,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#funding-over-time" id="toc-funding-over-time" class="nav-link active" data-scroll-target="#funding-over-time">Funding over time</a></li>
+  <li><a href="#grant-holders" id="toc-grant-holders" class="nav-link" data-scroll-target="#grant-holders">Grant holders</a></li>
+  <li><a href="#all-grants" id="toc-all-grants" class="nav-link" data-scroll-target="#all-grants">All grants</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -158,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -170,24 +177,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><strong>Last updated:</strong> 2026-04-17 08:20 SAST</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="grants_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="last-updated">
+<p>Last updated 12 October 2026, 18:50 SAST · Amounts in South African Rand</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-e50987b6d24f64b66498" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e50987b6d24f64b66498">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["ACDI Research Fellowship","NRF Incentive Grant","NRF Incentive Grant","ACDI","SANBI BIOGAPS","SANBI  SEEC collaboration","NRF RCA Fellowship","NRF - Competitive Support for Unrated Researchers","NRF Interns","NRF ACCESS phase II","SANBI - SEEC - Fitz","NRF Marine and Coastal Research Grant","NRF Global Change Grand Challenge","NRF/ Y rated researcher","NRF/ Marine and Coastal","FLAIR Fellowship","URC Carnegie DEAL","Oppenheimer Trust","DST-NRF Conference Fund","University of Cape Town, Hosting a Conference Grant","CoE MaSS","JRS Biodiversity Foundation","URC Junior Research Fellow","URC COVID Relief Grant for research groups","GKEPF grant","SANCCOB","AWR (Antarctic Wildlife Fund)","NITheCS","CoCT Mayors Discretionary Fund","NRF/ Marine and Coastal","Richard Lounsbery Foundation","SANBI / Agence Française de Développement","ACDI / IDRC Canada","ACDI / EU Horizons","NRF/African Coelacanth Ecosystem Programme","NRF/African Coelacanth Ecosystem Programme","EU-funded H2020 programme","NRF FBIP programme","URC Faculty Equipment Grant","NRF-SANSA NeoFrontiers","UNESCO / Government of the Netherlands","Total"],["Vernon Visser","Res Altwegg","Vernon Visser","Res Altwegg / Vernon Visser","Res Altwegg","Res Altwegg / Greg Distiller","Jonathan Colville","Jonathan Colville","Res Altwegg","Res Altwegg / Vernon Visser / Jasper Slingsby / Birgit Erni / David Maphisa / Mzabalazo Ngwenya","Res Altwegg / Greg Distiller","Natasha Karenyi/Allan Clark","Jasper Slingsby / Vernon Visser / Res Altwegg","Tess Gridley","Tess Gridley","Christopher Trisos","Res Altwegg, Birgit Erni, Greg Distiller, Ian Durbach, Natasha Karenyi, Allan Clark, Vernon Visser","Tim Kuiper","Res Altwegg and ISEC-LOC","Res Altwegg and ISEC-LOC","Res Altwegg and ISEC-LOC","Res Altwegg, Vernon Visser, Greg Distiller, Allan Clark, Mzabalazo Ngwenya, Sulaiman Salau","Res Altwegg, Birgit Erni, Greg Distiller, Ian Durbach","Res Altwegg","Res Altwegg, Tim Kuiper","Chris Oosthuizen, Res Altwegg","Chris Oosthuizen","Chris Oosthuizen, Stefan Schoombie","Tess Gridley","Tess Gridley","Tess Gridley","Vernon Visser","Vernon Visser","Vernon Visser","Natasha Karenyi","Natasha Karenyi","Natasha Karenyi","Natasha Karenyi","Jasper Slingsby","Jasper Slingsby / Glenn Moncrieff","Jasper Slingsby",""],["2018 - 2019","2013 - 2019","2018 - 2019","2014 - 2019","2016 - 2019","2017 - 2019","2014 - 2019","2017 - 2019","2018 - 2020","2018 - 2020","2018 - 2020","2019 - 2021","2019 - 2021","2019 - 2021","2019 - 2021","2019 - 2021","2021 - 2022","2021 - 2022","2022 - 2022","2022 - 2022","2022 - 2022","2020 - 2023","2021 - 2024","2021 - 2022","2022 - 2023","2023 - 2024","2021 - 2024","2023 - 2024","2022 - 2023","2022 - 2025","2023 - 2024","2023 - 2027","2021 - 2024","2024 - 2025","2021 - 2023","2024 - 2026","2021 - 2025","2022 - 2024","2023 - 2023","2022 - 2024","2023 - 2024",""],["  100,000","   80,000","   30,000","","   64,500","   40,000","","   30,875","   96,600","2,875,900","  200,000","  460,000","  832,000","  166,200","  840,000","1,750,000","","","","","","","","","","","","","","","","","","","","","","","","","","7,566,075"],["","","","","","","","","","2,494,648","","  550,000","  674,000","  119,020","  640,000","1,750,000","","","","","","  306,656","","","","","","","","","","","","","","","","","","","","6,534,324"],["","","","","","","","","","","","  315,000.0","  649,000.0","   15,730.0","  320,000.0","","  200,000.0","   13,000.0","","","","  677,312.0","  658,000.0","  344,423.4","","","","","","","","","","","","","","","","","","3,192,465.4"],["","","","","","","","","","","","","","","","","  200,000.0","   75,000.0","  700,000.0","   25,000.0","   54,000.0","  677,312.0","  658,000.0","  238,921.0","  100,000.0","","","","  250,000.0","  527,000.0","","","  101,507.0","","","","","","","  292,023.3","","3,898,763.3"],["","","","","","","","","","","","","","","","","","","","","","  338,656.0","  658,000.0","","  100,000.0","","","","","  589,000.0","1,440,000.0","  950,000.0","  106,582.0","","","","","","1,000,000.0","  571,256.7","  300,000.0","6,053,494.7"],["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","  499,000.0","","  450,000.0","  111,911.0","  443,358.5","","","","","","  291,423.3","  200,000.0","1,995,692.8"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Project Name<\/th>\n      <th>Grant holder<\/th>\n      <th>Start and End<\/th>\n      <th>2019<\/th>\n      <th>2020<\/th>\n      <th>2021<\/th>\n      <th>2022<\/th>\n      <th>2023<\/th>\n      <th>2024<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel"],"pageLength":25,"scrollX":true,"columnDefs":[{"name":"Project Name","targets":0},{"name":"Grant holder","targets":1},{"name":"Start and End","targets":2},{"name":"2019","targets":3},{"name":"2020","targets":4},{"name":"2021","targets":5},{"name":"2022","targets":6},{"name":"2023","targets":7},{"name":"2024","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<div class="stat-row">
+<div class="stat-tile">
+<div class="stat-label">Funding in 2025</div>
+<div class="stat-value">R893K</div>
+<div class="stat-note">2 grants with funding that year</div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Funding 2019–2025</div>
+<div class="stat-value">R30.1M</div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Average per year</div>
+<div class="stat-value">R4.3M</div>
+<div class="stat-note">2019–2025</div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Grants since 2019</div>
+<div class="stat-value">41</div>
+<div class="stat-note">17 grant holders</div>
+</div>
+</div>
+</div>
+</div>
+<section id="funding-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="funding-over-time">Funding over time</h2>
+<div class="chart-card">
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-56b6703ae617674a1fba" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-56b6703ae617674a1fba">{"x":{"visdat":{"1d926ab60175":["function () ","plotlyVisDat"]},"cur_data":"1d926ab60175","attrs":{"1d926ab60175":{"x":[2019,2020,2021,2022,2023,2024,2025],"y":[7566075,6534324,3192465.3999999999,3898763.3300000001,6053494.6699999999,1995692.8300000001,893358.5],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6"]},"text":["<b>2019<\/b><br>R7,566,075","<b>2020<\/b><br>R6,534,324","<b>2021<\/b><br>R3,192,465","<b>2022<\/b><br>R3,898,763","<b>2023<\/b><br>R6,053,495","<b>2024<\/b><br>R1,995,693","<b>2025<\/b><br>R893,358"],"hoverinfo":"text","textposition":"none","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":10,"t":70,"r":20},"title":{"text":"<b>Grant funding per year<\/b><br><span style='font-size:12px;color:#898781'>Sum of yearly amounts across all grants<\/span>","x":0,"xanchor":"left","xref":"paper","y":1,"yanchor":"top","yref":"container","pad":{"t":10},"font":{"size":15,"color":"#0b0b0b"}},"font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":13,"color":"#52514e"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","xaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"showgrid":false,"linecolor":"#c3c2b7","linewidth":1,"tickfont":{"color":"#52514e"},"fixedrange":true,"type":"category","categoryorder":"array","categoryarray":[2019,2020,2021,2022,2023,2024,2025]},"yaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"gridcolor":"#e1e0d9","gridwidth":1,"zeroline":true,"zerolinecolor":"#c3c2b7","zerolinewidth":1,"tickformat":"~s","tickprefix":"R","rangemode":"tozero","tickfont":{"color":"#898781"},"fixedrange":true},"showlegend":false,"legend":{"orientation":"h","x":0,"xanchor":"left","y":1.02,"yanchor":"bottom","font":{"size":12,"color":"#52514e"},"traceorder":"normal"},"hoverlabel":{"bgcolor":"#ffffff","bordercolor":"#e1e0d9","font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":12,"color":"#0b0b0b"}},"bargap":0.34999999999999998,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false,"responsive":true},"data":[{"x":[2019,2020,2021,2022,2023,2024,2025],"y":[7566075,6534324,3192465.3999999999,3898763.3300000001,6053494.6699999999,1995692.8300000001,893358.5],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6"],"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>2019<\/b><br>R7,566,075","<b>2020<\/b><br>R6,534,324","<b>2021<\/b><br>R3,192,465","<b>2022<\/b><br>R3,898,763","<b>2023<\/b><br>R6,053,495","<b>2024<\/b><br>R1,995,693","<b>2025<\/b><br>R893,358"],"hoverinfo":["text","text","text","text","text","text","text"],"textposition":["none","none","none","none","none","none","none"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div class="chart-card">
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-d40a8ca6a546728f5ca3" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d40a8ca6a546728f5ca3">{"x":{"visdat":{"1d922db4bd95":["function () ","plotlyVisDat"]},"cur_data":"1d922db4bd95","attrs":{"1d922db4bd95":{"x":[2019,2020,2021,2022,2023,2024,2025],"y":[14,7,9,13,10,6,2],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6"]},"text":["<b>2019<\/b><br>14 grants","<b>2020<\/b><br>7 grants","<b>2021<\/b><br>9 grants","<b>2022<\/b><br>13 grants","<b>2023<\/b><br>10 grants","<b>2024<\/b><br>6 grants","<b>2025<\/b><br>2 grants"],"hoverinfo":"text","textposition":"none","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":10,"t":70,"r":20},"title":{"text":"<b>Grants with funding each year<\/b><br><span style='font-size:12px;color:#898781'>Number of grants with a non-zero amount in that year<\/span>","x":0,"xanchor":"left","xref":"paper","y":1,"yanchor":"top","yref":"container","pad":{"t":10},"font":{"size":15,"color":"#0b0b0b"}},"font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":13,"color":"#52514e"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","xaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"showgrid":false,"linecolor":"#c3c2b7","linewidth":1,"tickfont":{"color":"#52514e"},"fixedrange":true,"type":"category","categoryorder":"array","categoryarray":[2019,2020,2021,2022,2023,2024,2025]},"yaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"gridcolor":"#e1e0d9","gridwidth":1,"zeroline":true,"zerolinecolor":"#c3c2b7","zerolinewidth":1,"tickformat":",d","tickprefix":"","rangemode":"tozero","tickfont":{"color":"#898781"},"fixedrange":true},"showlegend":false,"legend":{"orientation":"h","x":0,"xanchor":"left","y":1.02,"yanchor":"bottom","font":{"size":12,"color":"#52514e"},"traceorder":"normal"},"hoverlabel":{"bgcolor":"#ffffff","bordercolor":"#e1e0d9","font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":12,"color":"#0b0b0b"}},"bargap":0.34999999999999998,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false,"responsive":true},"data":[{"x":[2019,2020,2021,2022,2023,2024,2025],"y":[14,7,9,13,10,6,2],"marker":{"color":["#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6","#2a78d6"],"line":{"color":"rgba(31,119,180,1)"}},"text":["<b>2019<\/b><br>14 grants","<b>2020<\/b><br>7 grants","<b>2021<\/b><br>9 grants","<b>2022<\/b><br>13 grants","<b>2023<\/b><br>10 grants","<b>2024<\/b><br>6 grants","<b>2025<\/b><br>2 grants"],"hoverinfo":["text","text","text","text","text","text","text"],"textposition":["none","none","none","none","none","none","none"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<details class="numbers-view">
+<summary>Show the numbers</summary>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-351c8aac95c147e8949e" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-351c8aac95c147e8949e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Year":[2025,2024,2023,2022,2021,2020,2019],"Funding (R)":[893358.5,1995692.83,6053494.67,3898763.33,3192465.4,6534324,7566075],"Grants":[2,6,10,13,9,7,14]},"columns":[{"id":"Year","name":"Year","type":"numeric","format":{"cell":{},"aggregated":{}},"align":"right"},{"id":"Funding (R)","name":"Funding (R)","type":"numeric","format":{"cell":{"separators":true},"aggregated":{"separators":true}},"align":"right"},{"id":"Grants","name":"Grants","type":"numeric","format":{"cell":{"separators":true},"aggregated":{"separators":true}},"align":"right"}],"pagination":false,"compact":true,"theme":{"color":"#0b0b0b","borderColor":"#e1e0d9","cellPadding":"8px 10px","headerStyle":{"color":"#52514e","fontWeight":600,"fontSize":"0.8rem","textTransform":"uppercase","letterSpacing":"0.03em","borderBottom":"1px solid #c3c2b7"},"rowHighlightStyle":{"background":"#f4f8fd"},"footerStyle":{"fontWeight":700,"borderTop":"1px solid #c3c2b7"},"filterInputStyle":{"borderColor":"#e1e0d9"},"searchInputStyle":{"width":"260px","borderColor":"#e1e0d9"}},"dataKey":"b3425b2c832e994a6e68d6793afce891"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</details>
+</div>
+</div>
+</section>
+<section id="grant-holders" class="level2">
+<h2 class="anchored" data-anchor-id="grant-holders">Grant holders</h2>
+<div class="chart-card">
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-c211b9fd27a58d8b5897" style="width:100%;height:473px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c211b9fd27a58d8b5897">{"x":{"visdat":{"1d924a77b16a":["function () ","plotlyVisDat"]},"cur_data":"1d924a77b16a","attrs":{"1d924a77b16a":{"y":["Christopher Trisos","Allan Clark","Greg Distiller","David Maphisa","Tess Gridley","Mzabalazo Ngwenya","Birgit Erni","Jasper Slingsby","Vernon Visser","Res Altwegg"],"x":[3500000,3724936,4613936,5370548,5405950,7370484,7744548,10180251.33,13112201,13942928.4],"orientation":"h","marker":{"color":"#2a78d6"},"text":["R3.5M","R3.7M","R4.6M","R5.4M","R5.4M","R7.4M","R7.7M","R10.2M","R13.1M","R13.9M"],"textposition":"outside","textfont":{"color":"#52514e","size":12},"hovertext":["<b>Christopher Trisos<\/b><br>R3.5M<br>1 grant","<b>Allan Clark<\/b><br>R3.7M<br>3 grants","<b>Greg Distiller<\/b><br>R4.6M<br>5 grants","<b>David Maphisa<\/b><br>R5.4M<br>1 grant","<b>Tess Gridley<\/b><br>R5.4M<br>4 grants","<b>Mzabalazo Ngwenya<\/b><br>R7.4M<br>2 grants","<b>Birgit Erni<\/b><br>R7.7M<br>3 grants","<b>Jasper Slingsby<\/b><br>R10.2M<br>5 grants","<b>Vernon Visser<\/b><br>R13.1M<br>9 grants","<b>Res Altwegg<\/b><br>R13.9M<br>15 grants"],"hoverinfo":"text","cliponaxis":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"height":490,"margin":{"b":40,"l":10,"t":70,"r":20},"title":{"text":"<b>Top 10 grant holders by funding<\/b><br><span style='font-size:12px;color:#898781'>2019–2025 · shared grants count in full for each holder<\/span>","x":0,"xanchor":"left","xref":"paper","y":1,"yanchor":"top","yref":"container","pad":{"t":10},"font":{"size":15,"color":"#0b0b0b"}},"font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":13,"color":"#52514e"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","xaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"gridcolor":"#e1e0d9","gridwidth":1,"zeroline":true,"zerolinecolor":"#c3c2b7","zerolinewidth":1,"tickformat":"~s","tickprefix":"R","rangemode":"tozero","tickfont":{"color":"#898781"},"fixedrange":true},"yaxis":{"domain":[0,1],"automargin":true,"title":{"text":[],"font":{"size":12,"color":"#898781"}},"showgrid":false,"linecolor":"#c3c2b7","linewidth":1,"tickfont":{"color":"#52514e"},"fixedrange":true,"type":"category","categoryorder":"array","categoryarray":["Christopher Trisos","Allan Clark","Greg Distiller","David Maphisa","Tess Gridley","Mzabalazo Ngwenya","Birgit Erni","Jasper Slingsby","Vernon Visser","Res Altwegg"]},"showlegend":false,"legend":{"orientation":"h","x":0,"xanchor":"left","y":1.02,"yanchor":"bottom","font":{"size":12,"color":"#52514e"},"traceorder":"normal"},"hoverlabel":{"bgcolor":"#ffffff","bordercolor":"#e1e0d9","font":{"family":"Inter, system-ui, -apple-system, 'Segoe UI', sans-serif","size":12,"color":"#0b0b0b"}},"bargap":0.34999999999999998,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false,"responsive":true},"data":[{"y":["Christopher Trisos","Allan Clark","Greg Distiller","David Maphisa","Tess Gridley","Mzabalazo Ngwenya","Birgit Erni","Jasper Slingsby","Vernon Visser","Res Altwegg"],"x":[3500000,3724936,4613936,5370548,5405950,7370484,7744548,10180251.33,13112201,13942928.4],"orientation":"h","marker":{"color":"#2a78d6","line":{"color":"rgba(31,119,180,1)"}},"text":["R3.5M","R3.7M","R4.6M","R5.4M","R5.4M","R7.4M","R7.7M","R10.2M","R13.1M","R13.9M"],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textfont":{"color":"#52514e","size":12},"hovertext":["<b>Christopher Trisos<\/b><br>R3.5M<br>1 grant","<b>Allan Clark<\/b><br>R3.7M<br>3 grants","<b>Greg Distiller<\/b><br>R4.6M<br>5 grants","<b>David Maphisa<\/b><br>R5.4M<br>1 grant","<b>Tess Gridley<\/b><br>R5.4M<br>4 grants","<b>Mzabalazo Ngwenya<\/b><br>R7.4M<br>2 grants","<b>Birgit Erni<\/b><br>R7.7M<br>3 grants","<b>Jasper Slingsby<\/b><br>R10.2M<br>5 grants","<b>Vernon Visser<\/b><br>R13.1M<br>9 grants","<b>Res Altwegg<\/b><br>R13.9M<br>15 grants"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text"],"cliponaxis":false,"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</section>
+<section id="all-grants" class="level2">
+<h2 class="anchored" data-anchor-id="all-grants">All grants</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-tools">
+<button class="btn btn-sm btn-outline-secondary" onclick="Reactable.downloadDataCSV('grants', 'grants.csv')">Download CSV</button>
+</div>
+<div class="reactable html-widget html-fill-item" id="grants" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="grants">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Project":["NRF/African Coelacanth Ecosystem Programme","ACDI / EU Horizons","SANBI / Agence Française de Développement","SANCCOB","NITheCS","Richard Lounsbery Foundation","UNESCO / Government of the Netherlands","URC Faculty Equipment Grant","NRF/ Marine and Coastal","NRF FBIP programme","NRF-SANSA NeoFrontiers","GKEPF grant","CoCT Mayors Discretionary Fund","DST-NRF Conference Fund","University of Cape Town, Hosting a Conference Grant","CoE MaSS","EU-funded H2020 programme","URC Junior Research Fellow","AWR (Antarctic Wildlife Fund)","ACDI / IDRC Canada","NRF/African Coelacanth Ecosystem Programme","URC Carnegie DEAL","Oppenheimer Trust","URC COVID Relief Grant for research groups","JRS Biodiversity Foundation","NRF Marine and Coastal Research Grant","NRF Global Change Grand Challenge","NRF/ Y rated researcher","NRF/ Marine and Coastal","FLAIR Fellowship","NRF Interns","NRF ACCESS phase II","SANBI - SEEC - Fitz","ACDI Research Fellowship","NRF Incentive Grant","SANBI  SEEC collaboration","NRF - Competitive Support for Unrated Researchers","SANBI BIOGAPS","ACDI","NRF RCA Fellowship","NRF Incentive Grant"],"Grant holder":["Natasha Karenyi","Vernon Visser","Vernon Visser","Chris Oosthuizen, Res Altwegg","Chris Oosthuizen, Stefan Schoombie","Tess Gridley","Jasper Slingsby","Jasper Slingsby","Tess Gridley","Natasha Karenyi","Jasper Slingsby / Glenn Moncrieff","Res Altwegg, Tim Kuiper","Tess Gridley","Res Altwegg and ISEC-LOC","Res Altwegg and ISEC-LOC","Res Altwegg and ISEC-LOC","Natasha Karenyi","Res Altwegg, Birgit Erni, Greg Distiller, Ian Durbach","Chris Oosthuizen","Vernon Visser","Natasha Karenyi","Res Altwegg, Birgit Erni, Greg Distiller, Ian Durbach, Natasha Karenyi, Allan Clark, Vernon Visser","Tim Kuiper","Res Altwegg","Res Altwegg, Vernon Visser, Greg Distiller, Allan Clark, Mzabalazo Ngwenya, Sulaiman Salau","Natasha Karenyi/Allan Clark","Jasper Slingsby / Vernon Visser / Res Altwegg","Tess Gridley","Tess Gridley","Christopher Trisos","Res Altwegg","Res Altwegg / Vernon Visser / Jasper Slingsby / Birgit Erni / David Maphisa / Mzabalazo Ngwenya","Res Altwegg / Greg Distiller","Vernon Visser","Vernon Visser","Res Altwegg / Greg Distiller","Jonathan Colville","Res Altwegg","Res Altwegg / Vernon Visser","Jonathan Colville","Res Altwegg"],"Period":["2024–2026","2024–2025","2023–2027","2023–2024","2023–2024","2023–2024","2023–2024","2023–2023","2022–2025","2022–2024","2022–2024","2022–2023","2022–2023","2022–2022","2022–2022","2022–2022","2021–2025","2021–2024","2021–2024","2021–2024","2021–2023","2021–2022","2021–2022","2021–2022","2020–2023","2019–2021","2019–2021","2019–2021","2019–2021","2019–2021","2018–2020","2018–2020","2018–2020","2018–2019","2018–2019","2017–2019","2017–2019","2016–2019","2014–2019","2014–2019","2013–2019"],"2019":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA",460000,832000,166200,840000,1750000,96600,2875900,200000,100000,30000,40000,30875,64500,"NA","NA",80000],"2020":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA",306656,550000,674000,119020,640000,1750000,"NA",2494648,"NA","NA","NA","NA","NA","NA","NA","NA","NA"],"2021":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA",658000,"NA","NA","NA",200000,13000,344423.4,677312,315000,649000,15730,320000,"NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"2022":["NA","NA","NA","NA","NA","NA","NA","NA",527000,"NA",292023.33,100000,250000,700000,25000,54000,"NA",658000,"NA",101507,"NA",200000,75000,238921,677312,"NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"2023":["NA","NA",950000,"NA","NA",1440000,300000,1000000,589000,"NA",571256.67,100000,"NA","NA","NA","NA","NA",658000,"NA",106582,"NA","NA","NA","NA",338656,"NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"2024":["NA",443358.5,450000,"NA","NA","NA",200000,"NA",499000,"NA",291423.33,"NA","NA","NA","NA","NA","NA","NA","NA",111911,"NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"2025":["NA",443358.5,450000,"NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"]},"columns":[{"id":"Project","name":"Project","type":"character","minWidth":200,"headerClassName":"nowrap-header","footer":"Total"},{"id":"Grant holder","name":"Grant holder","type":"character","minWidth":200,"headerClassName":"nowrap-header"},{"id":"Period","name":"Period","type":"character","minWidth":100,"headerClassName":"nowrap-header"},{"id":"2019","name":"2019","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","","","","","","","","","","","","","","","","","","","","","","","","","460,000","832,000","166,200","840,000","1,750,000","96,600","2,875,900","200,000","100,000","30,000","40,000","30,875","64,500","","","80,000"],"footer":"7,566,075","align":"right"},{"id":"2020","name":"2020","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","","","","","","","","","","","","","","","","","","","","","","","","306,656","550,000","674,000","119,020","640,000","1,750,000","","2,494,648","","","","","","","","",""],"footer":"6,534,324","align":"right"},{"id":"2021","name":"2021","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","","","","","","","","","","","","","","","","","658,000","","","","200,000","13,000","344,423","677,312","315,000","649,000","15,730","320,000","","","","","","","","","","","",""],"footer":"3,192,465","align":"right"},{"id":"2022","name":"2022","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","","","","","","","","527,000","","292,023","100,000","250,000","700,000","25,000","54,000","","658,000","","101,507","","200,000","75,000","238,921","677,312","","","","","","","","","","","","","","","",""],"footer":"3,898,763","align":"right"},{"id":"2023","name":"2023","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","","950,000","","","1,440,000","300,000","1,000,000","589,000","","571,257","100,000","","","","","","658,000","","106,582","","","","","338,656","","","","","","","","","","","","","","","",""],"footer":"6,053,495","align":"right"},{"id":"2024","name":"2024","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","443,358","450,000","","","","200,000","","499,000","","291,423","","","","","","","","","111,911","","","","","","","","","","","","","","","","","","","","",""],"footer":"1,995,693","align":"right"},{"id":"2025","name":"2025","type":"numeric","minWidth":100,"headerClassName":"nowrap-header","cell":["","443,358","450,000","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],"footer":"893,358","align":"right"}],"resizable":true,"searchable":true,"defaultPageSize":25,"showPageSizeOptions":true,"pageSizeOptions":[15,25,50,100],"paginationType":"jump","highlight":true,"compact":true,"theme":{"color":"#0b0b0b","borderColor":"#e1e0d9","cellPadding":"8px 10px","headerStyle":{"color":"#52514e","fontWeight":600,"fontSize":"0.8rem","textTransform":"uppercase","letterSpacing":"0.03em","borderBottom":"1px solid #c3c2b7"},"rowHighlightStyle":{"background":"#f4f8fd"},"footerStyle":{"fontWeight":700,"borderTop":"1px solid #c3c2b7"},"filterInputStyle":{"borderColor":"#e1e0d9"},"searchInputStyle":{"width":"260px","borderColor":"#e1e0d9"}},"language":{"searchPlaceholder":"Search this table…"},"elementId":"grants","dataKey":"2b807ea67b4a5cb90919c94eb695b0d2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
